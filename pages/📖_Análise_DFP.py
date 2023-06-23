@@ -30,7 +30,7 @@ st.markdown("# Análise Exploratória DFP")
 # ------------------------------------------------------------------------------
 
 import os
-DIR = "/content"
+DIR = "/"
 entries = [entry for entry in os.listdir(DIR) if os.path.isfile(os.path.join(DIR, entry))]
 options = mp.Filter(entries, ['dfp_cia_aberta'])
 options.remove("dfp_cia_aberta.csv")
