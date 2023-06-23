@@ -1,4 +1,3 @@
-%%writefile my_app/pages/02_📖_Análise_DFP.py
 # https://streamlit-emoji-shortcodes-streamlit-app-gwckff.streamlit.app/
 
 # ------------------------------------------------------------------------------
