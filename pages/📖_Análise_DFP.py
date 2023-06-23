@@ -12,8 +12,6 @@ from PIL import Image
 
 # ------------------------------------------------------------------------------
 
-import sys
-sys.path.append('/content/marcelo/marcelo')
 import marcelo as mp
 import DFP as dfp
 import matplotlib.pyplot as plt
