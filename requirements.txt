@@ -32,4 +32,5 @@ vega_datasets
 wordcloud
 xarray
 yellowbrick
+squarify
 
