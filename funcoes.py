@@ -175,16 +175,6 @@ def grafico_2(df, titulo, denom_cia, dt_refer):
 
 def grafico_3(df, titulo, denom_cia, dt_refer):
 
-  #niveis = list(df['NIVEL_CONTA'].unique())
-  #niveis.sort(reverse=False)
-
-  #filtro_nivel_conta = alt.selection_single(
-  #    name='Nivel',
-  #    fields=['NIVEL_CONTA'],
-  #    bind=alt.binding_select(options=niveis),
-  #    init={'NIVEL_CONTA': min(niveis)}
-  #)
-
   grafico_linha1 = alt.Chart(df[df['ORDEM_EXERC'] == "ÚLTIMO"]).encode(
       x=alt.X('DT_REFER:T', axis=alt.Axis(title='Ano')),
       y=alt.Y('VL_CONTA:Q', axis=alt.Axis(title='Valor (R$)', format='$.2f'), sort=alt.EncodingSortField("CD_CONTA")),
@@ -202,7 +192,7 @@ def grafico_3(df, titulo, denom_cia, dt_refer):
           "fontSize": 16,
           "fontWeight": "bold"
       }
-  )#.add_selection(filtro_nivel_conta).transform_filter(filtro_nivel_conta)
+  )
 
   # Exibir o gráfico interativo
   st.altair_chart(my_chart.interactive(), use_container_width=True)  

@@ -45,6 +45,12 @@ st.write(f'Você escolheu: {option} ({titulo})')
 
 # ------------------------------------------------------------------------------
 
+st.subheader("Dados brutos")
+df_csv = fun.filter_dataframe(df_csv)
+st.dataframe(df_csv)
+
+# ------------------------------------------------------------------------------
+
 # Definir a empresa a ser analisada
 # https://discuss.streamlit.io/t/multiselect-widget-data-displayed-in-alphabetical-order/21617/2
 denom_cia = st.selectbox('Qual a empresa gostaria de analisar?', df_csv.sort_values(by="DENOM_CIA").DENOM_CIA.unique())
@@ -90,7 +96,7 @@ datas_referencia = dfp.busca_datas_referencia(df_csv, cd_cvm)
 dt_refer = st.selectbox('Selecione a data de referência:', datas_referencia)
 
 # Definir o nível de detalhamento
-nivel_conta = st.selectbox('Selecione o nivel de detalhamento:', np.sort(df_csv['NIVEL_CONTA'].unique()))
+nivel_conta = st.selectbox('Selecione o nivel de detalhamento:', np.sort(df_csv['NIVEL_CONTA'].unique())[::-1])
 
 # ------------------------------------------------------------------------------
 
@@ -104,7 +110,33 @@ if analise == "Dados na data de referência":
   df_DFP = dfp.dados_da_empresa_na_data_referencia(df_csv, cd_cvm, dt_refer, nivel_conta)
 
   st.write("Tabela pivoteada com as contas da empresa na data de referência")
-  st.dataframe(dfp.pivotear_tabela(df_DFP))
+  df = dfp.pivotear_tabela(df_DFP)  
+  colunas = fun.retorna_colunas_data(df)
+  df['Diferença'] = df[colunas[1]] - df[colunas[0]]
+  st.write(df)
+  
+  # Gráfico
+  st.line_chart(df, x='DS_CONTA', y=fun.retorna_colunas_data(df))
+  
+  # Tabs
+  col1, col2 = st.tabs(["Penúltimo Exercício", "Último Exercício"])  
+  with col1:
+    st.subheader("Penúltimo Exercício")    
+    # Selecionar apenas o penúltimo exercício
+    filtered_df = df_DFP[(df_DFP['ORDEM_EXERC'] == "PENÚLTIMO")].sort_values(by=['CD_CONTA_PAI','CD_CONTA']).reset_index(drop=True)  
+    # Gráfico
+    df = dfp.pivotear_tabela(filtered_df)
+    st.line_chart(df, x='DS_CONTA', y=fun.retorna_colunas_data(df))
+    st.bar_chart(df, x='DS_CONTA', y=fun.retorna_colunas_data(df))
+        
+  with col2:
+    st.subheader("Último Exercício")      
+    # Selecionar apenas o último exercício
+    filtered_df = df_DFP[(df_DFP['ORDEM_EXERC'] == "ÚLTIMO")].sort_values(by=['CD_CONTA_PAI','CD_CONTA']).reset_index(drop=True)  
+    # Gráfico
+    df = dfp.pivotear_tabela(filtered_df)
+    st.line_chart(df, x='DS_CONTA', y=fun.retorna_colunas_data(df))
+    st.bar_chart(df, x='DS_CONTA', y=fun.retorna_colunas_data(df))
   
 # ------------------------------------------------------------------------------
   
@@ -112,18 +144,31 @@ if analise == "Dados na data de referência - Gráfico de rede - NetworkX":
 
   # Busca todos os dados da empresa na data de referência selecionada
   df_DFP = dfp.dados_da_empresa_na_data_referencia(df_csv, cd_cvm, dt_refer, nivel_conta)
-  
-  # Selecionar apenas o último exercício
-  df_DFP = df_DFP[(df_DFP['ORDEM_EXERC'] == "ÚLTIMO")]
-  df = df_DFP.sort_values(by=['CD_CONTA_PAI','CD_CONTA']).reset_index(drop=True)
 
   st.write("Tabela pivoteada com as contas da empresa na data de referência")
-  st.dataframe(dfp.pivotear_tabela(df_DFP))  
+  df = dfp.pivotear_tabela(df_DFP)  
+  colunas = fun.retorna_colunas_data(df)
+  df['Diferença'] = df[colunas[1]] - df[colunas[0]]
+  st.write(df)
   
   # Gráfico
   node_color = st.selectbox('Atributo:', ['NIVEL_CONTA:N','ST_CONTA_FIXA:N','VL_CONTA:Q','degree:Q'])
   cmap = st.selectbox('Mapas de cores:', ['viridis','set1','yellowgreen','blues'])
-  fun.desenha_grafico_rede(df, node_color=node_color, cmap=cmap, title=titulo)
+  
+  # Tabs
+  col1, col2 = st.tabs(["Penúltimo Exercício", "Último Exercício"])  
+  with col1:
+    st.subheader("Penúltimo Exercício")    
+    # Selecionar apenas o penúltimo exercício
+    df = df_DFP[(df_DFP['ORDEM_EXERC'] == "PENÚLTIMO")].sort_values(by=['CD_CONTA_PAI','CD_CONTA']).reset_index(drop=True)  
+    # Gráfico
+    fun.desenha_grafico_rede(df, node_color=node_color, cmap=cmap, title=titulo)
+  with col2:
+    st.subheader("Último Exercício")      
+    # Selecionar apenas o último exercício
+    df = df_DFP[(df_DFP['ORDEM_EXERC'] == "ÚLTIMO")].sort_values(by=['CD_CONTA_PAI','CD_CONTA']).reset_index(drop=True)  
+    # Gráfico
+    fun.desenha_grafico_rede(df, node_color=node_color, cmap=cmap, title=titulo)  
 
 # ------------------------------------------------------------------------------
 
@@ -132,16 +177,29 @@ if analise == "Dados na data de referência - Gráfico de rede - Plotly":
   # Busca todos os dados da empresa na data de referência selecionada
   df_DFP = dfp.dados_da_empresa_na_data_referencia(df_csv, cd_cvm, dt_refer, nivel_conta)
   
-  # Selecionar apenas o último exercício
-  df_DFP = df_DFP[(df_DFP['ORDEM_EXERC'] == "ÚLTIMO")]
-  df = df_DFP.sort_values(by=['CD_CONTA_PAI','CD_CONTA']).reset_index(drop=True)
-
   st.write("Tabela pivoteada com as contas da empresa na data de referência")
-  st.dataframe(dfp.pivotear_tabela(df_DFP))  
+  df = dfp.pivotear_tabela(df_DFP)  
+  colunas = fun.retorna_colunas_data(df)
+  df['Diferença'] = df[colunas[1]] - df[colunas[0]]
+  st.write(df)
   
   # Gráfico
-  node_label = st.selectbox('Atributo:', ['','DS_CONTA','CD_CONTA'])
-  fun.desenha_grafico_rede_plotly(df, node_label=node_label, title=titulo)
+  node_label = st.selectbox('Atributo:', ['','DS_CONTA','CD_CONTA'])  
+  
+  # Tabs
+  col1, col2 = st.tabs(["Penúltimo Exercício", "Último Exercício"])  
+  with col1:
+    st.subheader("Penúltimo Exercício")    
+    # Selecionar apenas o penúltimo exercício
+    df = df_DFP[(df_DFP['ORDEM_EXERC'] == "PENÚLTIMO")].sort_values(by=['CD_CONTA_PAI','CD_CONTA']).reset_index(drop=True)  
+    # Gráfico
+    fun.desenha_grafico_rede_plotly(df, node_label=node_label, title=titulo)
+  with col2:
+    st.subheader("Último Exercício")      
+    # Selecionar apenas o último exercício
+    df = df_DFP[(df_DFP['ORDEM_EXERC'] == "ÚLTIMO")].sort_values(by=['CD_CONTA_PAI','CD_CONTA']).reset_index(drop=True)  
+    # Gráfico
+    fun.desenha_grafico_rede_plotly(df, node_label=node_label, title=titulo) 
   
 # ------------------------------------------------------------------------------
   
@@ -150,15 +208,23 @@ if analise == "Dados na data de referência - Waterfall":
   # Busca todos os dados da empresa na data de referência selecionada
   df_DFP = dfp.dados_da_empresa_na_data_referencia(df_csv, cd_cvm, dt_refer, nivel_conta)
   
-  # Selecionar apenas o último exercício
-  df_DFP = df_DFP[(df_DFP['ORDEM_EXERC'] == "ÚLTIMO")]
-  df = df_DFP.sort_values(by=['CD_CONTA_PAI','CD_CONTA']).reset_index(drop=True)
-
   st.write("Tabela pivoteada com as contas da empresa na data de referência")
-  st.dataframe(dfp.pivotear_tabela(df_DFP))  
-  
-  # Gráfico
-  fun.gerar_waterfall(df, title=titulo)
+  st.dataframe(dfp.pivotear_tabela(df_DFP)) 
+
+  # Tabs
+  col1, col2 = st.tabs(["Penúltimo Exercício", "Último Exercício"])
+  with col1:
+    st.subheader("Penúltimo Exercício")    
+    # Selecionar apenas o penúltimo exercício
+    df = df_DFP[(df_DFP['ORDEM_EXERC'] == "PENÚLTIMO")].sort_values(by=['CD_CONTA_PAI','CD_CONTA']).reset_index(drop=True)  
+    # Gráfico
+    fun.gerar_waterfall(df, title=titulo + " - " + "Penúltimo Exercício")
+  with col2:
+    st.subheader("Último Exercício")      
+    # Selecionar apenas o último exercício
+    df = df_DFP[(df_DFP['ORDEM_EXERC'] == "ÚLTIMO")].sort_values(by=['CD_CONTA_PAI','CD_CONTA']).reset_index(drop=True)  
+    # Gráfico
+    fun.gerar_waterfall(df, title=titulo + " - " + "Último Exercício")
 
 # ------------------------------------------------------------------------------
 
@@ -237,7 +303,7 @@ elif analise == "Dados na data de referência - Conta X subcontas - Gráfico de 
 
   # ----------------------------------------------------------------------------
 
-  cd_conta = st.selectbox('Conta', df_DFP[(df_DFP['NIVEL_CONTA'] == nivel_conta)]['CD_CONTA'].unique()) # Seleciona a conta desejada
+  cd_conta = st.selectbox('Conta', df_DFP[(df_DFP['NIVEL_CONTA'] <= nivel_conta)]['CD_CONTA'].unique()) # Seleciona a conta desejada
 
   # ----------------------------------------------------------------------------
 
@@ -262,7 +328,7 @@ elif analise == "Dados na data de referência - Conta X subcontas - Gráfico de 
 
   # ----------------------------------------------------------------------------
 
-  cd_conta = st.selectbox('Conta', df_DFP[(df_DFP['NIVEL_CONTA'] == nivel_conta)]['CD_CONTA'].unique()) # Seleciona a conta desejada
+  cd_conta = st.selectbox('Conta', df_DFP[(df_DFP['NIVEL_CONTA'] <= nivel_conta)]['CD_CONTA'].unique()) # Seleciona a conta desejada
 
   # ----------------------------------------------------------------------------
 
@@ -287,7 +353,7 @@ elif analise == "Dados na data de referência - Conta X subcontas - Treemap Squa
 
   # ----------------------------------------------------------------------------
 
-  cd_conta = st.selectbox('Conta', df_DFP[(df_DFP['NIVEL_CONTA'] == nivel_conta)]['CD_CONTA'].unique()) # Seleciona a conta desejada
+  cd_conta = st.selectbox('Conta', df_DFP[(df_DFP['NIVEL_CONTA'] <= nivel_conta)]['CD_CONTA'].unique()) # Seleciona a conta desejada
 
   # ----------------------------------------------------------------------------
 
@@ -313,7 +379,7 @@ elif analise == "Dados na data de referência - Conta X subcontas - Treemap Plot
 
   # ----------------------------------------------------------------------------
 
-  cd_conta = st.selectbox('Conta', df_DFP[(df_DFP['NIVEL_CONTA'] == nivel_conta)]['CD_CONTA'].unique()) # Seleciona a conta desejada
+  cd_conta = st.selectbox('Conta', df_DFP[(df_DFP['NIVEL_CONTA'] <= nivel_conta)]['CD_CONTA'].unique()) # Seleciona a conta desejada
 
   # ----------------------------------------------------------------------------
 
@@ -346,7 +412,7 @@ elif analise == "Dados na data de referência - Conta X subcontas - Sunburst":
 
   # ----------------------------------------------------------------------------
 
-  cd_conta = st.selectbox('Conta', df_DFP[(df_DFP['NIVEL_CONTA'] == nivel_conta)]['CD_CONTA'].unique()) # Seleciona a conta desejada
+  cd_conta = st.selectbox('Conta', df_DFP[(df_DFP['NIVEL_CONTA'] <= nivel_conta)]['CD_CONTA'].unique()) # Seleciona a conta desejada
 
   # ----------------------------------------------------------------------------
 
@@ -388,14 +454,29 @@ elif analise == "Dados na data de referência - Conta X subcontas - Sunburst":
 # ------------------------------------------------------------------------------
 # ------------------------------------------------------------------------------
 # ------------------------------------------------------------------------------
-
+  
 elif analise == "Evolução das contas":
-
+  
   # Busca todos os dados da empresa até a data de referência selecionada
   df_DFP = dfp.dados_da_empresa(df_csv, cd_cvm, dt_refer, nivel_conta)
 
-  # Tabela pivoteada com a evolução das contas da empresa nas datas de referência
-  st.dataframe(dfp.pivotear_tabela(df_DFP))
+  st.write("Tabela pivoteada com as contas da empresa na data de referência")
+  df = dfp.pivotear_tabela(df_DFP)
+  st.write(df)
+  
+  # Gráfico
+  st.line_chart(df, x='DS_CONTA', y=fun.retorna_colunas_data(df))
+
+  # Tabs  
+  cols = st.tabs(fun.retorna_colunas_data(df))
+  for i, data in enumerate(fun.retorna_colunas_data(df)):
+    with cols[i]:
+      st.subheader(data)
+      filtered_df = df_DFP[df_DFP['DT_FIM_EXERC'] == data].sort_values(by=['CD_CONTA_PAI', 'CD_CONTA']).reset_index(drop=True)
+      # Gráfico
+      pivoted_df = dfp.pivotear_tabela(filtered_df)
+      st.line_chart(pivoted_df, x='DS_CONTA', y=data)
+      st.bar_chart(pivoted_df, x='DS_CONTA', y=data)  
 
 # ------------------------------------------------------------------------------
 
@@ -477,9 +558,24 @@ elif analise == "Evolução das contas - Conta X conta":
   st.dataframe(dfp.pivotear_tabela(df_DFP))
 
   # Gráfico de linha comparativo com a evolução das contas da empresa ao longo dos anos
-  conta1 = st.selectbox('Conta 1', df_DFP['CD_CONTA'].unique())
-  conta2 = st.selectbox('Conta 2', df_DFP['CD_CONTA'].unique())
+  contas = df_DFP['CD_CONTA'].unique()
+  conta1 = st.selectbox('Conta 1', np.sort(contas).tolist()[::1])
+  conta2 = st.selectbox('Conta 2', np.sort(contas).tolist()[::-1])
   fun.grafico_comparativo_duas_contas(df_DFP, titulo, denom_cia, dt_refer, conta1, conta2)
+
+  # Gráfico  
+  filtered_df = df_DFP[df_DFP['CD_CONTA'].isin([conta1, conta2])].sort_values(by=['CD_CONTA']).reset_index(drop=True)
+  df = dfp.pivotear_tabela(filtered_df)
+  st.line_chart(df, x='DS_CONTA', y=fun.retorna_colunas_data(df))
+  st.area_chart(df, x='DS_CONTA', y=fun.retorna_colunas_data(df))
+  st.bar_chart(df, x='DS_CONTA', y=fun.retorna_colunas_data(df))
+  
+  # Gráfico
+  df = dfp.transpor(filtered_df)
+  st.write(df)
+  st.line_chart(df)
+  st.bar_chart(df)
+  st.area_chart(df)
 
 # ------------------------------------------------------------------------------
 
@@ -490,7 +586,7 @@ elif analise == "Evolução das contas - Conta X subcontas - Gráfico de linhas"
 
   # ----------------------------------------------------------------------------
 
-  cd_conta = st.selectbox('Conta', df_DFP[(df_DFP['NIVEL_CONTA'] == nivel_conta)]['CD_CONTA'].unique()) # Seleciona a conta desejada
+  cd_conta = st.selectbox('Conta', df_DFP[(df_DFP['NIVEL_CONTA'] <= nivel_conta)]['CD_CONTA'].unique()) # Seleciona a conta desejada
 
   # ----------------------------------------------------------------------------
 
@@ -506,7 +602,6 @@ elif analise == "Evolução das contas - Conta X subcontas - Gráfico de linhas"
 
   # ----------------------------------------------------------------------------
 
-
 # ------------------------------------------------------------------------------
 
 elif analise == "Evolução das contas - Conta X subcontas - Gráfico de barras horizontal":
@@ -516,7 +611,7 @@ elif analise == "Evolução das contas - Conta X subcontas - Gráfico de barras 
 
   # ----------------------------------------------------------------------------
 
-  cd_conta = st.selectbox('Conta', df_DFP[(df_DFP['NIVEL_CONTA'] == nivel_conta)]['CD_CONTA'].unique()) # Seleciona a conta desejada
+  cd_conta = st.selectbox('Conta', df_DFP[(df_DFP['NIVEL_CONTA'] <= nivel_conta)]['CD_CONTA'].unique()) # Seleciona a conta desejada
 
   # ----------------------------------------------------------------------------
 
@@ -541,7 +636,7 @@ elif analise == "Evolução das contas - Conta X subcontas - Gráfico de barras 
 
   # ----------------------------------------------------------------------------
 
-  cd_conta = st.selectbox('Conta', df_DFP[(df_DFP['NIVEL_CONTA'] == nivel_conta)]['CD_CONTA'].unique()) # Seleciona a conta desejada
+  cd_conta = st.selectbox('Conta', df_DFP[(df_DFP['NIVEL_CONTA'] <= nivel_conta)]['CD_CONTA'].unique()) # Seleciona a conta desejada
 
   # ----------------------------------------------------------------------------
 
@@ -566,7 +661,7 @@ elif analise == "Evolução das contas - Conta X subcontas - Treemap Squarify":
 
   # ----------------------------------------------------------------------------
 
-  cd_conta = st.selectbox('Conta', df_DFP[(df_DFP['NIVEL_CONTA'] == nivel_conta)]['CD_CONTA'].unique()) # Seleciona a conta desejada
+  cd_conta = st.selectbox('Conta', df_DFP[(df_DFP['NIVEL_CONTA'] <= nivel_conta)]['CD_CONTA'].unique()) # Seleciona a conta desejada
 
   # ----------------------------------------------------------------------------
 
@@ -592,7 +687,7 @@ elif analise == "Evolução das contas - Conta X subcontas - Treemap Plotly":
 
   # ----------------------------------------------------------------------------
 
-  cd_conta = st.selectbox('Conta', df_DFP[(df_DFP['NIVEL_CONTA'] == nivel_conta)]['CD_CONTA'].unique()) # Seleciona a conta desejada
+  cd_conta = st.selectbox('Conta', df_DFP[(df_DFP['NIVEL_CONTA'] <= nivel_conta)]['CD_CONTA'].unique()) # Seleciona a conta desejada
 
   # ----------------------------------------------------------------------------
 
@@ -625,7 +720,7 @@ elif analise == "Evolução das contas - Conta X subcontas - Sunburst":
 
   # ----------------------------------------------------------------------------
 
-  cd_conta = st.selectbox('Conta', df_DFP[(df_DFP['NIVEL_CONTA'] == nivel_conta)]['CD_CONTA'].unique()) # Seleciona a conta desejada
+  cd_conta = st.selectbox('Conta', df_DFP[(df_DFP['NIVEL_CONTA'] <= nivel_conta)]['CD_CONTA'].unique()) # Seleciona a conta desejada
 
   # ----------------------------------------------------------------------------
 

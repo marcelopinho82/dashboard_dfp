@@ -8,8 +8,8 @@ import streamlit as st
 # https://www.chesf.com.br/relainvest/Documents/Pages/CVM/DFP/DFP_DEZ2022%20CHESF.pdf
 # https://www.easytweaks.com/pandas-pivot-table-sum/
 
-def pivotear_tabela(df, index=['CD_CONTA', 'DS_CONTA'], margins=False, margins_name='All'):
-  pivot_table = pd.pivot_table(df, index=index, columns=['DT_FIM_EXERC'], values='VL_CONTA', aggfunc=np.sum, fill_value=0, margins=margins, margins_name=margins_name)
+def pivotear_tabela(df, index=['CD_CONTA', 'DS_CONTA'], aggfunc=np.sum, margins=False, margins_name='All'):
+  pivot_table = pd.pivot_table(df, index=index, columns=['DT_FIM_EXERC'], values='VL_CONTA', aggfunc=aggfunc, fill_value=0, margins=margins, margins_name=margins_name)
   pivot_table = pivot_table.reset_index()
   pivot_table.index.name = None
   #import os
@@ -32,25 +32,92 @@ def dados_da_empresa_na_data_referencia(df_ref, cd_cvm, dt_refer, nivel_conta):
 
 # ------------------------------------------------------------------------------
 
+import glob
+
+def demonstrativos_empresa_na_data_referencia(cd_cvm):
+
+  arquivos = glob.glob("*dfp_cia_aberta_*")
+
+  # Inicializa uma lista vazia para armazenar os DataFrames carregados
+  dfs = []
+
+  # Itera sobre cada arquivo na lista "options"
+  for arquivo in arquivos:
+
+    # Carrega o arquivo em um DataFrame
+    df_csv = pd.read_csv(arquivo, low_memory=False)
+  
+    # Definir a data de referência
+    datas_referencia = busca_datas_referencia(df_csv, cd_cvm)
+  
+    if len(datas_referencia) > 0:
+      dt_refer = datas_referencia[0]
+  
+      # Busca todos os dados da empresa na data de referência selecionada
+      df_DFP = dados_da_empresa_na_data_referencia(df_csv, cd_cvm, dt_refer, 10)
+
+      # Selecionar apenas o último exercício
+      df_DFP = df_DFP[(df_DFP['ORDEM_EXERC'] == "ÚLTIMO")]
+
+      # Adiciona o DataFrame à lista
+      dfs.append(df_DFP)
+
+  # Concatena todos os DataFrames na lista em um único DataFrame
+  df_concatenado = pd.concat(dfs, ignore_index=True)
+  df_concatenado.drop_duplicates(inplace=True)
+  
+  return df_concatenado
+
+# ------------------------------------------------------------------------------
+
+def demonstrativos_empresa(cd_cvm):
+
+  arquivos = glob.glob("*dfp_cia_aberta_*")
+
+  # Inicializa uma lista vazia para armazenar os DataFrames carregados
+  dfs = []
+
+  # Itera sobre cada arquivo na lista "options"
+  for arquivo in arquivos:
+
+    # Carrega o arquivo em um DataFrame
+    df_csv = pd.read_csv(arquivo, low_memory=False)
+  
+    # Definir a data de referência
+    datas_referencia = busca_datas_referencia(df_csv, cd_cvm)
+  
+    if len(datas_referencia) > 0:
+      dt_refer = datas_referencia[0]
+  
+      # Busca todos os dados da empresa na data de referência selecionada
+      df_DFP = dados_da_empresa(df_csv, cd_cvm, dt_refer, 10)
+
+      # Adiciona o DataFrame à lista
+      dfs.append(df_DFP)
+
+  # Concatena todos os DataFrames na lista em um único DataFrame
+  df_concatenado = pd.concat(dfs, ignore_index=True)
+  df_concatenado.drop_duplicates(inplace=True)
+  
+  return df_concatenado
+
+# ------------------------------------------------------------------------------
+
 def busca_datas_referencia(df_ref, cd_cvm):
   datas_referencia = df_ref[(df_ref['CD_CVM'] == cd_cvm)]['DT_REFER'].unique() # Datas de referência disponíveis para a empresa selecionada
-  st.write(f"Datas de referência disponíveis para a empresa selecionada: {np.sort(datas_referencia)}")
+  #st.write(f"Datas de referência disponíveis para a empresa selecionada: {np.sort(datas_referencia)}")
   dt_refer = df_ref[(df_ref['CD_CVM'] == cd_cvm)]['DT_REFER'].max() # Utiliza a última data disponível como a data de referência
-  st.write(f"Última data de referência: {dt_refer}")
+  #st.write(f"Última data de referência: {dt_refer}")
   return np.sort(datas_referencia)[::-1]
 
 # ------------------------------------------------------------------------------
 
-def transpor(df):
-
-  import os
-
-  df2 = df.transpose()
-  df2.to_csv("Temp.csv", index=False)
-  df2 = pd.read_csv("Temp.csv")
-  os.remove("Temp.csv")
-
-  return df2
+def transpor(df_ref):
+  df = pivotear_tabela(df_ref)
+  df = df.drop(['CD_CONTA'], axis=1)
+  df.set_index("DS_CONTA", inplace=True)
+  df = df.T
+  return df
 
 # ------------------------------------------------------------------------------
 
