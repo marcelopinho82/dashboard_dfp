@@ -46,7 +46,7 @@ st.write(f'Você escolheu: {option} ({titulo})')
 # ------------------------------------------------------------------------------
 
 st.subheader("Dados brutos")
-df_csv = fun.filter_dataframe(df_csv)
+df_csv = mp.filter_dataframe(df_csv)
 st.dataframe(df_csv)
 
 # ------------------------------------------------------------------------------
