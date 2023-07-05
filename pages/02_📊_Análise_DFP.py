@@ -22,7 +22,7 @@ import funcoes as fun
 # https://docs.streamlit.io/library/api-reference/text
 # https://blog.streamlit.io/introducing-multipage-apps/
 
-st.markdown("# Análise Exploratória DFP")
+st.markdown("# Análise Exploratória DFP 📊")
 
 # ------------------------------------------------------------------------------
 # Dados
