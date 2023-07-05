@@ -11,6 +11,33 @@ import DFP as dfp
 
 # ------------------------------------------------------------------------------
 
+def filtrar_df(df, criterios):
+    filtered_df = df.copy()    
+    # Aplicar os critérios de filtro
+    for column, value in criterios.items():
+        filtered_df = filtered_df[(filtered_df[column].str.contains(value))]    
+    return filtered_df
+    
+def retorna_linhas(df_concatenado, criterios1, criterios2):
+  df1 = retorna_linha(df_concatenado, criterios1)
+  df2 = retorna_linha(df_concatenado, criterios2)
+  df = pd.concat([df1, df2], ignore_index=True)
+  st.write(df)
+  return df
+
+def retorna_linha(df_concatenado, criterios):
+  df = filtrar_df(df_concatenado, criterios).sort_values(by=['DT_FIM_EXERC'])
+  df = dfp.pivotear_tabela(df).max().to_frame().T
+  return df
+  
+def calcula_indicador(df, nome):
+  indicador = (df.iloc[0][retorna_colunas_data(df)] / df.iloc[1][retorna_colunas_data(df)]) * 100
+  df_resultado = pd.DataFrame(indicador)
+  df_resultado.columns = [nome]
+  return df_resultado
+  
+# ------------------------------------------------------------------------------
+
 def criar_paleta_cores(qtd_cores, esquema_cor):
     cmap = getattr(cm, esquema_cor)
     cores = [cmap(x) for x in range(qtd_cores)]
