@@ -48,6 +48,9 @@ niveis_conta = np.sort(df_concatenado['NIVEL_CONTA'].unique())
 st.subheader("Dados brutos")
 st.write(df_concatenado)
 
+st.subheader("Demonstrativos da empresa")
+df = fun.tabela_contas_empresa(df_concatenado, percentual=False)
+
 # ------------------------------------------------------------------------------
 
 # Definir o nível de detalhamento

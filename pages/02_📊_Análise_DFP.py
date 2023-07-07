@@ -46,7 +46,6 @@ st.write(f'Você escolheu: {option} ({titulo})')
 # ------------------------------------------------------------------------------
 
 st.subheader("Dados brutos")
-df_csv = mp.filter_dataframe(df_csv)
 st.dataframe(df_csv)
 
 # ------------------------------------------------------------------------------
@@ -63,10 +62,10 @@ analises = [
   "Dados na data de referência - Gráfico de rede - NetworkX",
   "Dados na data de referência - Gráfico de rede - Plotly",
   "Dados na data de referência - Waterfall",
-  "Dados na data de referência - Último X Penúltimo exercício - Gráfico de barras horizontal",
-  "Dados na data de referência - Último X Penúltimo exercício - Gráfico de barras vertical",
-  "Dados na data de referência - Último X Penúltimo exercício - Treemap Plotly",
-  "Dados na data de referência - Último X Penúltimo exercício - Sunburst",
+  "Dados na data de referência - Gráfico de barras horizontal",
+  "Dados na data de referência - Gráfico de barras vertical",
+  "Dados na data de referência - Treemap Plotly",
+  "Dados na data de referência - Sunburst",
   "Dados na data de referência - Conta X subcontas - Gráfico de barras horizontal",
   "Dados na data de referência - Conta X subcontas - Gráfico de barras vertical",
   "Dados na data de referência - Conta X subcontas - Treemap Squarify",
@@ -109,34 +108,21 @@ if analise == "Dados na data de referência":
   # Busca todos os dados da empresa na data de referência selecionada
   df_DFP = dfp.dados_da_empresa_na_data_referencia(df_csv, cd_cvm, dt_refer, nivel_conta)
 
-  st.write("Tabela pivoteada com as contas da empresa na data de referência")
-  df = dfp.pivotear_tabela(df_DFP)  
-  colunas = fun.retorna_colunas_data(df)
-  df['Diferença'] = df[colunas[1]] - df[colunas[0]]
-  st.write(df)
+  df = fun.tabela_contas_empresa(df_DFP)
   
   # Gráfico
-  st.line_chart(df, x='DS_CONTA', y=fun.retorna_colunas_data(df))
+  st.line_chart(df, x='DS_CONTA', y=fun.retorna_colunas_data(df))  
   
-  # Tabs
-  col1, col2 = st.tabs(["Penúltimo Exercício", "Último Exercício"])  
-  with col1:
-    st.subheader("Penúltimo Exercício")    
-    # Selecionar apenas o penúltimo exercício
-    filtered_df = df_DFP[(df_DFP['ORDEM_EXERC'] == "PENÚLTIMO")].sort_values(by=['CD_CONTA_PAI','CD_CONTA']).reset_index(drop=True)  
-    # Gráfico
-    df = dfp.pivotear_tabela(filtered_df)
-    st.line_chart(df, x='DS_CONTA', y=fun.retorna_colunas_data(df))
-    st.bar_chart(df, x='DS_CONTA', y=fun.retorna_colunas_data(df))
-        
-  with col2:
-    st.subheader("Último Exercício")      
-    # Selecionar apenas o último exercício
-    filtered_df = df_DFP[(df_DFP['ORDEM_EXERC'] == "ÚLTIMO")].sort_values(by=['CD_CONTA_PAI','CD_CONTA']).reset_index(drop=True)  
-    # Gráfico
-    df = dfp.pivotear_tabela(filtered_df)
-    st.line_chart(df, x='DS_CONTA', y=fun.retorna_colunas_data(df))
-    st.bar_chart(df, x='DS_CONTA', y=fun.retorna_colunas_data(df))
+  # Tabs  
+  tabs = st.tabs(fun.retorna_colunas_data(df))
+  for i, data in enumerate(fun.retorna_colunas_data(df)):
+    with tabs[i]:
+      st.subheader(data)
+      filtered_df = df_DFP[df_DFP['DT_FIM_EXERC'] == data].sort_values(by=['CD_CONTA_PAI', 'CD_CONTA']).reset_index(drop=True)
+      # Gráfico
+      pivoted_df = dfp.pivotear_tabela(filtered_df)
+      st.line_chart(pivoted_df, x='DS_CONTA', y=data)
+      st.bar_chart(pivoted_df, x='DS_CONTA', y=data)  
   
 # ------------------------------------------------------------------------------
   
@@ -145,30 +131,20 @@ if analise == "Dados na data de referência - Gráfico de rede - NetworkX":
   # Busca todos os dados da empresa na data de referência selecionada
   df_DFP = dfp.dados_da_empresa_na_data_referencia(df_csv, cd_cvm, dt_refer, nivel_conta)
 
-  st.write("Tabela pivoteada com as contas da empresa na data de referência")
-  df = dfp.pivotear_tabela(df_DFP)  
-  colunas = fun.retorna_colunas_data(df)
-  df['Diferença'] = df[colunas[1]] - df[colunas[0]]
-  st.write(df)
+  df = fun.tabela_contas_empresa(df_DFP)
   
   # Gráfico
   node_color = st.selectbox('Atributo:', ['NIVEL_CONTA:N','ST_CONTA_FIXA:N','VL_CONTA:Q','degree:Q'])
   cmap = st.selectbox('Mapas de cores:', ['viridis','set1','yellowgreen','blues'])
   
-  # Tabs
-  col1, col2 = st.tabs(["Penúltimo Exercício", "Último Exercício"])  
-  with col1:
-    st.subheader("Penúltimo Exercício")    
-    # Selecionar apenas o penúltimo exercício
-    df = df_DFP[(df_DFP['ORDEM_EXERC'] == "PENÚLTIMO")].sort_values(by=['CD_CONTA_PAI','CD_CONTA']).reset_index(drop=True)  
-    # Gráfico
-    fun.desenha_grafico_rede(df, node_color=node_color, cmap=cmap, title=titulo)
-  with col2:
-    st.subheader("Último Exercício")      
-    # Selecionar apenas o último exercício
-    df = df_DFP[(df_DFP['ORDEM_EXERC'] == "ÚLTIMO")].sort_values(by=['CD_CONTA_PAI','CD_CONTA']).reset_index(drop=True)  
-    # Gráfico
-    fun.desenha_grafico_rede(df, node_color=node_color, cmap=cmap, title=titulo)  
+  # Tabs  
+  tabs = st.tabs(fun.retorna_colunas_data(df))
+  for i, data in enumerate(fun.retorna_colunas_data(df)):
+    with tabs[i]:
+      st.subheader(data)
+      filtered_df = df_DFP[df_DFP['DT_FIM_EXERC'] == data].sort_values(by=['CD_CONTA_PAI', 'CD_CONTA']).reset_index(drop=True)
+      # Gráfico
+      fun.desenha_grafico_rede(filtered_df, node_color=node_color, cmap=cmap, title=titulo)
 
 # ------------------------------------------------------------------------------
 
@@ -177,29 +153,19 @@ if analise == "Dados na data de referência - Gráfico de rede - Plotly":
   # Busca todos os dados da empresa na data de referência selecionada
   df_DFP = dfp.dados_da_empresa_na_data_referencia(df_csv, cd_cvm, dt_refer, nivel_conta)
   
-  st.write("Tabela pivoteada com as contas da empresa na data de referência")
-  df = dfp.pivotear_tabela(df_DFP)  
-  colunas = fun.retorna_colunas_data(df)
-  df['Diferença'] = df[colunas[1]] - df[colunas[0]]
-  st.write(df)
+  df = fun.tabela_contas_empresa(df_DFP)
   
   # Gráfico
   node_label = st.selectbox('Atributo:', ['','DS_CONTA','CD_CONTA'])  
-  
-  # Tabs
-  col1, col2 = st.tabs(["Penúltimo Exercício", "Último Exercício"])  
-  with col1:
-    st.subheader("Penúltimo Exercício")    
-    # Selecionar apenas o penúltimo exercício
-    df = df_DFP[(df_DFP['ORDEM_EXERC'] == "PENÚLTIMO")].sort_values(by=['CD_CONTA_PAI','CD_CONTA']).reset_index(drop=True)  
-    # Gráfico
-    fun.desenha_grafico_rede_plotly(df, node_label=node_label, title=titulo)
-  with col2:
-    st.subheader("Último Exercício")      
-    # Selecionar apenas o último exercício
-    df = df_DFP[(df_DFP['ORDEM_EXERC'] == "ÚLTIMO")].sort_values(by=['CD_CONTA_PAI','CD_CONTA']).reset_index(drop=True)  
-    # Gráfico
-    fun.desenha_grafico_rede_plotly(df, node_label=node_label, title=titulo) 
+
+  # Tabs  
+  tabs = st.tabs(fun.retorna_colunas_data(df))
+  for i, data in enumerate(fun.retorna_colunas_data(df)):
+    with tabs[i]:
+      st.subheader(data)
+      filtered_df = df_DFP[df_DFP['DT_FIM_EXERC'] == data].sort_values(by=['CD_CONTA_PAI', 'CD_CONTA']).reset_index(drop=True)
+      # Gráfico
+      fun.desenha_grafico_rede_plotly(filtered_df, node_label=node_label, title=titulo) 
   
 # ------------------------------------------------------------------------------
   
@@ -208,59 +174,49 @@ if analise == "Dados na data de referência - Waterfall":
   # Busca todos os dados da empresa na data de referência selecionada
   df_DFP = dfp.dados_da_empresa_na_data_referencia(df_csv, cd_cvm, dt_refer, nivel_conta)
   
-  st.write("Tabela pivoteada com as contas da empresa na data de referência")
-  st.dataframe(dfp.pivotear_tabela(df_DFP)) 
-
-  # Tabs
-  col1, col2 = st.tabs(["Penúltimo Exercício", "Último Exercício"])
-  with col1:
-    st.subheader("Penúltimo Exercício")    
-    # Selecionar apenas o penúltimo exercício
-    df = df_DFP[(df_DFP['ORDEM_EXERC'] == "PENÚLTIMO")].sort_values(by=['CD_CONTA_PAI','CD_CONTA']).reset_index(drop=True)  
-    # Gráfico
-    fun.gerar_waterfall(df, title=titulo + " - " + "Penúltimo Exercício")
-  with col2:
-    st.subheader("Último Exercício")      
-    # Selecionar apenas o último exercício
-    df = df_DFP[(df_DFP['ORDEM_EXERC'] == "ÚLTIMO")].sort_values(by=['CD_CONTA_PAI','CD_CONTA']).reset_index(drop=True)  
-    # Gráfico
-    fun.gerar_waterfall(df, title=titulo + " - " + "Último Exercício")
+  df = fun.tabela_contas_empresa(df_DFP)
+    
+  # Tabs  
+  tabs = st.tabs(fun.retorna_colunas_data(df))
+  for i, data in enumerate(fun.retorna_colunas_data(df)):
+    with tabs[i]:
+      st.subheader(data)
+      filtered_df = df_DFP[df_DFP['DT_FIM_EXERC'] == data].sort_values(by=['CD_CONTA_PAI', 'CD_CONTA']).reset_index(drop=True)
+      # Gráfico
+      fun.gerar_waterfall(filtered_df, title=titulo + " - " + data)
 
 # ------------------------------------------------------------------------------
 
-elif analise == "Dados na data de referência - Último X Penúltimo exercício - Gráfico de barras horizontal":
+elif analise == "Dados na data de referência - Gráfico de barras horizontal":
 
   # Busca todos os dados da empresa na data de referência selecionada
   df_DFP = dfp.dados_da_empresa_na_data_referencia(df_csv, cd_cvm, dt_refer, nivel_conta)
   
-  st.write("Tabela pivoteada com as contas da empresa na data de referência")
-  st.dataframe(dfp.pivotear_tabela(df_DFP))
+  df = fun.tabela_contas_empresa(df_DFP)
 
   # Gráfico 1
   fun.grafico_1(dfp.pivotear_tabela(df_DFP), titulo, denom_cia, dt_refer)
 
 # ------------------------------------------------------------------------------
 
-elif analise == "Dados na data de referência - Último X Penúltimo exercício - Gráfico de barras vertical":
+elif analise == "Dados na data de referência - Gráfico de barras vertical":
 
   # Busca todos os dados da empresa na data de referência selecionada
   df_DFP = dfp.dados_da_empresa_na_data_referencia(df_csv, cd_cvm, dt_refer, nivel_conta)
   
-  st.write("Tabela pivoteada com as contas da empresa na data de referência")
-  st.dataframe(dfp.pivotear_tabela(df_DFP))
+  df = fun.tabela_contas_empresa(df_DFP)
 
   # Gráfico comparativo último X penúltimo exercício separado
   fun.grafico_2(df_DFP, titulo, denom_cia, dt_refer)
 
 # ------------------------------------------------------------------------------
 
-elif analise == "Dados na data de referência - Último X Penúltimo exercício - Treemap Plotly":
+elif analise == "Dados na data de referência - Treemap Plotly":
 
   # Busca todos os dados da empresa na data de referência selecionada
   df_DFP = dfp.dados_da_empresa_na_data_referencia(df_csv, cd_cvm, dt_refer, nivel_conta)
   
-  st.write("Tabela pivoteada com as contas da empresa na data de referência")
-  st.dataframe(dfp.pivotear_tabela(df_DFP))
+  df = fun.tabela_contas_empresa(df_DFP)
   
   # Remover contas nulas
   df_DFP = df_DFP[pd.notna(df_DFP['DS_CONTA_PAI'])]
@@ -274,13 +230,12 @@ elif analise == "Dados na data de referência - Último X Penúltimo exercício 
   
 # ------------------------------------------------------------------------------
 
-elif analise == "Dados na data de referência - Último X Penúltimo exercício - Sunburst":
+elif analise == "Dados na data de referência - Sunburst":
 
   # Busca todos os dados da empresa na data de referência selecionada
   df_DFP = dfp.dados_da_empresa_na_data_referencia(df_csv, cd_cvm, dt_refer, nivel_conta)
   
-  st.write("Tabela pivoteada com as contas da empresa na data de referência")
-  st.dataframe(dfp.pivotear_tabela(df_DFP))
+  df = fun.tabela_contas_empresa(df_DFP)
   
   # Remover contas nulas
   df_DFP = df_DFP[pd.notna(df_DFP['DS_CONTA_PAI'])]
@@ -309,12 +264,14 @@ elif analise == "Dados na data de referência - Conta X subcontas - Gráfico de 
 
   df = dfp.pivotear_tabela(df_DFP, index=['CD_CONTA', 'DS_CONTA', 'CD_CONTA_PAI']) # Pivotear a tabela
   df_pai = df[(df['CD_CONTA'] == cd_conta)] # Filtrar o dataframe pela conta selecionada
-  st.dataframe(df_pai)
+  df_pai = fun.incluir_percentual(df_pai)
+  st.dataframe(df_pai.drop(["CD_CONTA_PAI"], axis=1))
   fun.grafico_1(dfp.pivotear_tabela(df_DFP[(df_DFP['CD_CONTA'] == cd_conta)]), titulo, denom_cia, dt_refer)
 
   df_filho = df[(df['CD_CONTA_PAI'] == cd_conta)] # Filtrar o dataframe selecionando as subcontas
+  df_filho = fun.incluir_percentual(df_filho)
   st.write("Subcontas")
-  st.dataframe(df_filho) # Exibir o dataframe filtrado
+  st.dataframe(df_filho.drop(["CD_CONTA_PAI"], axis=1)) # Exibir o dataframe filtrado
   fun.grafico_1(df_filho, titulo, denom_cia, dt_refer)
 
   # ----------------------------------------------------------------------------
@@ -334,12 +291,14 @@ elif analise == "Dados na data de referência - Conta X subcontas - Gráfico de 
 
   df = dfp.pivotear_tabela(df_DFP, index=['CD_CONTA', 'DS_CONTA', 'CD_CONTA_PAI']) # Pivotear a tabela
   df_pai = df[(df['CD_CONTA'] == cd_conta)] # Filtrar o dataframe pela conta selecionada
-  st.dataframe(df_pai)
+  df_pai = fun.incluir_percentual(df_pai)
+  st.dataframe(df_pai.drop(["CD_CONTA_PAI"], axis=1))
   fun.grafico_2(df_DFP[(df_DFP['CD_CONTA'] == cd_conta)], titulo, denom_cia, dt_refer)
 
   df_filho = df[(df['CD_CONTA_PAI'] == cd_conta)] # Filtrar o dataframe selecionando as subcontas
+  df_filho = fun.incluir_percentual(df_filho)
   st.write("Subcontas")
-  st.dataframe(df_filho) # Exibir o dataframe filtrado
+  st.dataframe(df_filho.drop(["CD_CONTA_PAI"], axis=1)) # Exibir o dataframe filtrado
   fun.grafico_2(df_DFP[(df_DFP['CD_CONTA_PAI'] == cd_conta)], titulo, denom_cia, dt_refer)
 
   # ----------------------------------------------------------------------------
@@ -359,10 +318,12 @@ elif analise == "Dados na data de referência - Conta X subcontas - Treemap Squa
 
   df = dfp.pivotear_tabela(df_DFP, index=['CD_CONTA', 'DS_CONTA', 'CD_CONTA_PAI']) # Pivotear a tabela
   df_pai = df[(df['CD_CONTA'] == cd_conta)] # Filtrar o dataframe pela conta selecionada
-  st.dataframe(df_pai)
+  df_pai = fun.incluir_percentual(df_pai)
+  st.dataframe(df_pai.drop(["CD_CONTA_PAI"], axis=1))
   df_filho = df[(df['CD_CONTA_PAI'] == cd_conta)] # Filtrar o dataframe selecionando as subcontas
+  df_filho = fun.incluir_percentual(df_filho)
   st.write("Subcontas")
-  st.dataframe(df_filho) # Exibir o dataframe filtrado
+  st.dataframe(df_filho.drop(["CD_CONTA_PAI"], axis=1)) # Exibir o dataframe filtrado
 
   # ----------------------------------------------------------------------------
 
@@ -385,10 +346,12 @@ elif analise == "Dados na data de referência - Conta X subcontas - Treemap Plot
 
   df = dfp.pivotear_tabela(df_DFP, index=['CD_CONTA', 'DS_CONTA', 'CD_CONTA_PAI']) # Pivotear a tabela
   df_pai = df[(df['CD_CONTA'] == cd_conta)] # Filtrar o dataframe pela conta selecionada
-  st.dataframe(df_pai)
+  df_pai = fun.incluir_percentual(df_pai)
+  st.dataframe(df_pai.drop(["CD_CONTA_PAI"], axis=1))
   df_filho = df[(df['CD_CONTA_PAI'] == cd_conta)] # Filtrar o dataframe selecionando as subcontas
+  df_filho = fun.incluir_percentual(df_filho)
   st.write("Subcontas")
-  st.dataframe(df_filho) # Exibir o dataframe filtrado
+  st.dataframe(df_filho.drop(["CD_CONTA_PAI"], axis=1)) # Exibir o dataframe filtrado
 
   # ----------------------------------------------------------------------------
   
@@ -418,10 +381,12 @@ elif analise == "Dados na data de referência - Conta X subcontas - Sunburst":
 
   df = dfp.pivotear_tabela(df_DFP, index=['CD_CONTA', 'DS_CONTA', 'CD_CONTA_PAI']) # Pivotear a tabela
   df_pai = df[(df['CD_CONTA'] == cd_conta)] # Filtrar o dataframe pela conta selecionada
-  st.dataframe(df_pai)
+  df_pai = fun.incluir_percentual(df_pai)
+  st.dataframe(df_pai.drop(["CD_CONTA_PAI"], axis=1))
   df_filho = df[(df['CD_CONTA_PAI'] == cd_conta)] # Filtrar o dataframe selecionando as subcontas
+  df_filho = fun.incluir_percentual(df_filho)
   st.write("Subcontas")
-  st.dataframe(df_filho) # Exibir o dataframe filtrado
+  st.dataframe(df_filho.drop(["CD_CONTA_PAI"], axis=1)) # Exibir o dataframe filtrado
 
   # ----------------------------------------------------------------------------
   
@@ -468,9 +433,9 @@ elif analise == "Evolução das contas":
   st.line_chart(df, x='DS_CONTA', y=fun.retorna_colunas_data(df))
 
   # Tabs  
-  cols = st.tabs(fun.retorna_colunas_data(df))
+  tabs = st.tabs(fun.retorna_colunas_data(df))
   for i, data in enumerate(fun.retorna_colunas_data(df)):
-    with cols[i]:
+    with tabs[i]:
       st.subheader(data)
       filtered_df = df_DFP[df_DFP['DT_FIM_EXERC'] == data].sort_values(by=['CD_CONTA_PAI', 'CD_CONTA']).reset_index(drop=True)
       # Gráfico
@@ -557,26 +522,26 @@ elif analise == "Evolução das contas - Conta X conta":
   st.write("Tabela pivoteada com as contas da empresa na data de referência")
   st.dataframe(dfp.pivotear_tabela(df_DFP))
 
-  # Gráfico de linha comparativo com a evolução das contas da empresa ao longo dos anos
   contas = df_DFP['CD_CONTA'].unique()
   conta1 = st.selectbox('Conta 1', np.sort(contas).tolist()[::1])
   conta2 = st.selectbox('Conta 2', np.sort(contas).tolist()[::-1])
-  fun.grafico_comparativo_duas_contas(df_DFP, titulo, denom_cia, dt_refer, conta1, conta2)
-
-  # Gráfico  
-  filtered_df = df_DFP[df_DFP['CD_CONTA'].isin([conta1, conta2])].sort_values(by=['CD_CONTA']).reset_index(drop=True)
-  df = dfp.pivotear_tabela(filtered_df)
-  st.line_chart(df, x='DS_CONTA', y=fun.retorna_colunas_data(df))
-  st.area_chart(df, x='DS_CONTA', y=fun.retorna_colunas_data(df))
-  st.bar_chart(df, x='DS_CONTA', y=fun.retorna_colunas_data(df))
+  
+  filtered_df = df_DFP[df_DFP['CD_CONTA'].isin([conta1, conta2])].reset_index(drop=True) 
+  st.dataframe(dfp.pivotear_tabela(filtered_df, margins=True, margins_name='Total'))
   
   # Gráfico
+  st.subheader("Gráfico de barras + linhas")
+  fun.grafico_comparativo_duas_contas(df_DFP, titulo, denom_cia, dt_refer, conta1, conta2)
+    
+  # Gráfico
   df = dfp.transpor(filtered_df)
-  st.write(df)
+  st.subheader("Gráfico de linhas")
   st.line_chart(df)
+  st.subheader("Gráfico de barras")
   st.bar_chart(df)
-  st.area_chart(df)
-
+  st.subheader("Gráfico de área")
+  st.area_chart(df)  
+  
 # ------------------------------------------------------------------------------
 
 elif analise == "Evolução das contas - Conta X subcontas - Gráfico de linhas":
@@ -592,12 +557,12 @@ elif analise == "Evolução das contas - Conta X subcontas - Gráfico de linhas"
 
   df = dfp.pivotear_tabela(df_DFP, index=['CD_CONTA', 'DS_CONTA', 'CD_CONTA_PAI']) # Pivotear a tabela
   df_pai = df[(df['CD_CONTA'] == cd_conta)] # Filtrar o dataframe pela conta selecionada
-  st.dataframe(df_pai)
+  st.dataframe(df_pai.drop(["CD_CONTA_PAI"], axis=1))
   fun.grafico_3(df_DFP[(df_DFP['CD_CONTA'] == cd_conta)], titulo, denom_cia, dt_refer)
 
   df_filho = df[(df['CD_CONTA_PAI'] == cd_conta)] # Filtrar o dataframe selecionando as subcontas
   st.write("Subcontas")
-  st.dataframe(df_filho) # Exibir o dataframe filtrado
+  st.dataframe(df_filho.drop(["CD_CONTA_PAI"], axis=1)) # Exibir o dataframe filtrado
   fun.grafico_3(df_DFP[(df_DFP['CD_CONTA_PAI'] == cd_conta)], titulo, denom_cia, dt_refer)
 
   # ----------------------------------------------------------------------------
@@ -617,12 +582,12 @@ elif analise == "Evolução das contas - Conta X subcontas - Gráfico de barras 
 
   df = dfp.pivotear_tabela(df_DFP, index=['CD_CONTA', 'DS_CONTA', 'CD_CONTA_PAI']) # Pivotear a tabela
   df_pai = df[(df['CD_CONTA'] == cd_conta)] # Filtrar o dataframe pela conta selecionada
-  st.dataframe(df_pai)
+  st.dataframe(df_pai.drop(["CD_CONTA_PAI"], axis=1))
   fun.grafico_1(dfp.pivotear_tabela(df_DFP[(df_DFP['CD_CONTA'] == cd_conta)]), titulo, denom_cia, dt_refer)
 
   df_filho = df[(df['CD_CONTA_PAI'] == cd_conta)] # Filtrar o dataframe selecionando as subcontas
   st.write("Subcontas")
-  st.dataframe(df_filho) # Exibir o dataframe filtrado
+  st.dataframe(df_filho.drop(["CD_CONTA_PAI"], axis=1)) # Exibir o dataframe filtrado
   fun.grafico_1(df_filho, titulo, denom_cia, dt_refer)
 
   # ----------------------------------------------------------------------------
@@ -642,12 +607,12 @@ elif analise == "Evolução das contas - Conta X subcontas - Gráfico de barras 
 
   df = dfp.pivotear_tabela(df_DFP, index=['CD_CONTA', 'DS_CONTA', 'CD_CONTA_PAI']) # Pivotear a tabela
   df_pai = df[(df['CD_CONTA'] == cd_conta)] # Filtrar o dataframe pela conta selecionada
-  st.dataframe(df_pai)
+  st.dataframe(df_pai.drop(["CD_CONTA_PAI"], axis=1))
   fun.grafico_2(df_DFP[(df_DFP['CD_CONTA'] == cd_conta)], titulo, denom_cia, dt_refer)
 
   df_filho = df[(df['CD_CONTA_PAI'] == cd_conta)] # Filtrar o dataframe selecionando as subcontas
   st.write("Subcontas")
-  st.dataframe(df_filho) # Exibir o dataframe filtrado
+  st.dataframe(df_filho.drop(["CD_CONTA_PAI"], axis=1)) # Exibir o dataframe filtrado
   fun.grafico_2(df_DFP[(df_DFP['CD_CONTA_PAI'] == cd_conta)], titulo, denom_cia, dt_refer)
 
   # ----------------------------------------------------------------------------
@@ -667,10 +632,10 @@ elif analise == "Evolução das contas - Conta X subcontas - Treemap Squarify":
 
   df = dfp.pivotear_tabela(df_DFP, index=['CD_CONTA', 'DS_CONTA', 'CD_CONTA_PAI']) # Pivotear a tabela
   df_pai = df[(df['CD_CONTA'] == cd_conta)] # Filtrar o dataframe pela conta selecionada
-  st.dataframe(df_pai)
+  st.dataframe(df_pai.drop(["CD_CONTA_PAI"], axis=1))
   df_filho = df[(df['CD_CONTA_PAI'] == cd_conta)] # Filtrar o dataframe selecionando as subcontas
   st.write("Subcontas")
-  st.dataframe(df_filho) # Exibir o dataframe filtrado
+  st.dataframe(df_filho.drop(["CD_CONTA_PAI"], axis=1)) # Exibir o dataframe filtrado
 
   # ----------------------------------------------------------------------------
 
@@ -693,10 +658,10 @@ elif analise == "Evolução das contas - Conta X subcontas - Treemap Plotly":
 
   df = dfp.pivotear_tabela(df_DFP, index=['CD_CONTA', 'DS_CONTA', 'CD_CONTA_PAI']) # Pivotear a tabela
   df_pai = df[(df['CD_CONTA'] == cd_conta)] # Filtrar o dataframe pela conta selecionada
-  st.dataframe(df_pai)
+  st.dataframe(df_pai.drop(["CD_CONTA_PAI"], axis=1))
   df_filho = df[(df['CD_CONTA_PAI'] == cd_conta)] # Filtrar o dataframe selecionando as subcontas
   st.write("Subcontas")
-  st.dataframe(df_filho) # Exibir o dataframe filtrado
+  st.dataframe(df_filho.drop(["CD_CONTA_PAI"], axis=1)) # Exibir o dataframe filtrado
 
   # ----------------------------------------------------------------------------
 
@@ -726,10 +691,10 @@ elif analise == "Evolução das contas - Conta X subcontas - Sunburst":
 
   df = dfp.pivotear_tabela(df_DFP, index=['CD_CONTA', 'DS_CONTA', 'CD_CONTA_PAI']) # Pivotear a tabela
   df_pai = df[(df['CD_CONTA'] == cd_conta)] # Filtrar o dataframe pela conta selecionada
-  st.dataframe(df_pai)
+  st.dataframe(df_pai.drop(["CD_CONTA_PAI"], axis=1))
   df_filho = df[(df['CD_CONTA_PAI'] == cd_conta)] # Filtrar o dataframe selecionando as subcontas
   st.write("Subcontas")
-  st.dataframe(df_filho) # Exibir o dataframe filtrado
+  st.dataframe(df_filho.drop(["CD_CONTA_PAI"], axis=1)) # Exibir o dataframe filtrado
 
   # ----------------------------------------------------------------------------
 

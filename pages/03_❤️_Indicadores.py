@@ -44,6 +44,9 @@ df_concatenado = df_concatenado[(df_concatenado['CD_CONTA_PAI'].isin(["0","1","2
 st.subheader("Dados brutos")
 st.write(df_concatenado)
 
+st.subheader("Demonstrativos da empresa")
+df = fun.tabela_contas_empresa(df_concatenado, percentual=False)
+
 # ------------------------------------------------------------------------------
 
 # https://www.statology.org/pandas-check-if-string-contains-multiple-substrings/

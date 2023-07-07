@@ -8,6 +8,23 @@ import matplotlib.cm as cm
 import squarify
 import seaborn as sns
 import DFP as dfp
+import marcelo as mp
+
+# ------------------------------------------------------------------------------
+
+def incluir_percentual(df):
+  colunas = retorna_colunas_data(df)
+  df['%'] = ((df[colunas[1]] - df[colunas[0]]) / df[colunas[0]]) * 100
+  df['T'] = np.select([df['%'].lt(0), df['%'].gt(0), df['%'].eq(0)], [u"\u2193", u"\u2191", u"\u2192"]) # https://stackoverflow.com/questions/59926609/how-can-add-trend-arrow-in-python-pandas  
+  return df
+
+def tabela_contas_empresa(df_DFP, percentual=True):
+  st.write("Tabela pivoteada com as contas da empresa na data de referência")
+  df = dfp.pivotear_tabela(df_DFP)
+  if percentual:  
+    df = incluir_percentual(df)
+  st.write(mp.filter_dataframe(df))
+  return df
 
 # ------------------------------------------------------------------------------
 
@@ -231,7 +248,6 @@ def grafico_comparativo_duas_contas(df_ref, titulo, denom_cia, dt_refer, cd_cont
   df1 = df_ref[(df_ref['CD_CONTA'] == cd_conta_1)]
   df2 = df_ref[(df_ref['CD_CONTA'] == cd_conta_2)]
   df = pd.concat([df1, df2])
-  st.dataframe(dfp.pivotear_tabela(df, margins=True, margins_name='Total'))
 
   grafico_barras1 = alt.Chart(df1).encode(
       x=alt.X('DT_REFER:N', axis=alt.Axis(title='Data de Referência')),
