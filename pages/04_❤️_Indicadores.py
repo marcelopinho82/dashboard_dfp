@@ -33,6 +33,8 @@ st.markdown("# Indicadores ❤️")
 denom_cia = st.selectbox('Qual a empresa gostaria de analisar?', dfp.lista_empresas())
 cd_cvm = dfp.busca_cod_cvm_empresa(denom_cia)
 
+# ------------------------------------------------------------------------------
+
 tipo = st.selectbox('Demonstrativo:', ['Consolidado','Individual'])
 
 # ------------------------------------------------------------------------------
@@ -40,6 +42,8 @@ tipo = st.selectbox('Demonstrativo:', ['Consolidado','Individual'])
 df_concatenado = dfp.demonstrativos_empresa(cd_cvm)
 df_concatenado = df_concatenado[(df_concatenado['GRUPO_DFP'].str.contains(tipo))]
 df_concatenado = df_concatenado[(df_concatenado['CD_CONTA_PAI'].isin(["0","1","2","3","4","5"]))]
+
+# ------------------------------------------------------------------------------
 
 st.subheader("Dados brutos")
 st.write(df_concatenado)

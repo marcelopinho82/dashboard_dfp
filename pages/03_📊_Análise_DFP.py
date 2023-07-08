@@ -45,48 +45,10 @@ st.write(f'Você escolheu: {option} ({titulo})')
 
 # ------------------------------------------------------------------------------
 
-st.subheader("Dados brutos")
-st.dataframe(df_csv)
-
-# ------------------------------------------------------------------------------
-
 # Definir a empresa a ser analisada
 # https://discuss.streamlit.io/t/multiselect-widget-data-displayed-in-alphabetical-order/21617/2
 denom_cia = st.selectbox('Qual a empresa gostaria de analisar?', df_csv.sort_values(by="DENOM_CIA").DENOM_CIA.unique())
 cd_cvm = dfp.busca_cod_cvm_empresa(denom_cia)
-
-# ------------------------------------------------------------------------------
-
-analises = [
-  "Dados na data de referência",
-  "Dados na data de referência - Gráfico de rede - NetworkX",
-  "Dados na data de referência - Gráfico de rede - Plotly",
-  "Dados na data de referência - Waterfall",
-  "Dados na data de referência - Gráfico de barras horizontal",
-  "Dados na data de referência - Gráfico de barras vertical",
-  "Dados na data de referência - Treemap Plotly",
-  "Dados na data de referência - Sunburst",
-  "Dados na data de referência - Conta X subcontas - Gráfico de barras horizontal",
-  "Dados na data de referência - Conta X subcontas - Gráfico de barras vertical",
-  "Dados na data de referência - Conta X subcontas - Treemap Squarify",
-  "Dados na data de referência - Conta X subcontas - Treemap Plotly",
-  "Dados na data de referência - Conta X subcontas - Sunburst",
-  "Evolução das contas",
-  "Evolução das contas - Gráfico de barras horizontal",
-  "Evolução das contas - Gráfico de linhas",
-  "Evolução das contas - Treemap Plotly",
-  "Evolução das contas - Sunburst",
-  "Evolução das contas - Conta X conta",
-  "Evolução das contas - Conta X subcontas - Gráfico de linhas",
-  "Evolução das contas - Conta X subcontas - Gráfico de barras horizontal",
-  "Evolução das contas - Conta X subcontas - Gráfico de barras vertical",
-  "Evolução das contas - Conta X subcontas - Treemap Squarify",
-  "Evolução das contas - Conta X subcontas - Treemap Plotly",
-  "Evolução das contas - Conta X subcontas - Sunburst"
-  
-]
-
-analise = st.selectbox('Qual a análise gostaria de realizar?', analises)
 
 # ------------------------------------------------------------------------------
 
@@ -99,6 +61,49 @@ nivel_conta = st.selectbox('Selecione o nivel de detalhamento:', np.sort(df_csv[
 
 # ------------------------------------------------------------------------------
 
+analises = []
+analises.append("Dados na data de referência")
+analises.append("Dados na data de referência - Gráfico de rede - NetworkX")
+analises.append("Dados na data de referência - Gráfico de rede - Plotly")
+analises.append("Dados na data de referência - Gráfico de barras horizontal")
+analises.append("Dados na data de referência - Gráfico de barras vertical")
+analises.append("Dados na data de referência - Conta X subcontas - Gráfico de barras horizontal")
+analises.append("Dados na data de referência - Conta X subcontas - Gráfico de barras vertical")
+analises.append("Evolução das contas")
+analises.append("Evolução das contas - Gráfico de barras horizontal")
+analises.append("Evolução das contas - Conta X conta")
+analises.append("Evolução das contas - Conta X subcontas - Gráfico de barras horizontal")
+analises.append("Evolução das contas - Conta X subcontas - Gráfico de barras vertical")
+
+if "aberta_BPA_con" in option or "aberta_BPP_con" in option or "aberta_BP_con" in option or "aberta_BPA_ind" in option or "aberta_BPP_ind" in option or "aberta_BP_ind" in option:
+  analises.append("Dados na data de referência - Treemap Plotly")
+  analises.append("Dados na data de referência - Sunburst")
+  analises.append("Dados na data de referência - Conta X subcontas - Treemap Squarify")
+  analises.append("Dados na data de referência - Conta X subcontas - Treemap Plotly")
+  analises.append("Dados na data de referência - Conta X subcontas - Sunburst")
+  analises.append("Evolução das contas - Treemap Plotly")
+  analises.append("Evolução das contas - Sunburst")    
+  analises.append("Evolução das contas - Conta X subcontas - Treemap Squarify")    
+  analises.append("Evolução das contas - Conta X subcontas - Treemap Plotly")    
+  analises.append("Evolução das contas - Conta X subcontas - Sunburst")    
+  analises.append("Evolução das contas - Gráfico de linhas")
+  analises.append("Evolução das contas - Conta X subcontas - Gráfico de linhas")
+elif "aberta_DRE_con" in option or "aberta_DRE_ind" in option or "aberta_DRA_con" in option or "aberta_DRA_ind" in option or "aberta_DVA_con" in option or "aberta_DVA_ind" in option:
+  analises.append("Dados na data de referência - Waterfall")
+  analises.append("Evolução das contas - Gráfico de linhas")
+  analises.append("Evolução das contas - Conta X subcontas - Gráfico de linhas")
+#elif "DFC_MD" in option:
+#  analises.append("")
+#elif "DFC_MI" in option:
+#  analises.append("")
+#elif "DMPL" in option:    
+#  analises.append("")
+
+analises = np.sort(analises)
+analise = st.selectbox('Qual a análise gostaria de realizar?', analises)
+
+# ------------------------------------------------------------------------------
+
 st.subheader(analise)
 
 # ------------------------------------------------------------------------------
@@ -108,11 +113,15 @@ if analise == "Dados na data de referência":
   # Busca todos os dados da empresa na data de referência selecionada
   df_DFP = dfp.dados_da_empresa_na_data_referencia(df_csv, cd_cvm, dt_refer, nivel_conta)
 
+  # Tabela com as contas da empresa
   df = fun.tabela_contas_empresa(df_DFP)
   
   # Gráfico
   st.line_chart(df, x='DS_CONTA', y=fun.retorna_colunas_data(df))  
   
+  # Atributos
+  fun.atributos(df.drop(['%', 'T'], axis=1))
+ 
   # Tabs  
   tabs = st.tabs(fun.retorna_colunas_data(df))
   for i, data in enumerate(fun.retorna_colunas_data(df)):
@@ -131,6 +140,7 @@ if analise == "Dados na data de referência - Gráfico de rede - NetworkX":
   # Busca todos os dados da empresa na data de referência selecionada
   df_DFP = dfp.dados_da_empresa_na_data_referencia(df_csv, cd_cvm, dt_refer, nivel_conta)
 
+  # Tabela com as contas da empresa
   df = fun.tabela_contas_empresa(df_DFP)
   
   # Gráfico
@@ -153,6 +163,7 @@ if analise == "Dados na data de referência - Gráfico de rede - Plotly":
   # Busca todos os dados da empresa na data de referência selecionada
   df_DFP = dfp.dados_da_empresa_na_data_referencia(df_csv, cd_cvm, dt_refer, nivel_conta)
   
+  # Tabela com as contas da empresa
   df = fun.tabela_contas_empresa(df_DFP)
   
   # Gráfico
@@ -174,6 +185,7 @@ if analise == "Dados na data de referência - Waterfall":
   # Busca todos os dados da empresa na data de referência selecionada
   df_DFP = dfp.dados_da_empresa_na_data_referencia(df_csv, cd_cvm, dt_refer, nivel_conta)
   
+  # Tabela com as contas da empresa
   df = fun.tabela_contas_empresa(df_DFP)
     
   # Tabs  
@@ -192,6 +204,7 @@ elif analise == "Dados na data de referência - Gráfico de barras horizontal":
   # Busca todos os dados da empresa na data de referência selecionada
   df_DFP = dfp.dados_da_empresa_na_data_referencia(df_csv, cd_cvm, dt_refer, nivel_conta)
   
+  # Tabela com as contas da empresa
   df = fun.tabela_contas_empresa(df_DFP)
 
   # Gráfico 1
@@ -204,6 +217,7 @@ elif analise == "Dados na data de referência - Gráfico de barras vertical":
   # Busca todos os dados da empresa na data de referência selecionada
   df_DFP = dfp.dados_da_empresa_na_data_referencia(df_csv, cd_cvm, dt_refer, nivel_conta)
   
+  # Tabela com as contas da empresa
   df = fun.tabela_contas_empresa(df_DFP)
 
   # Gráfico comparativo último X penúltimo exercício separado
@@ -216,6 +230,7 @@ elif analise == "Dados na data de referência - Treemap Plotly":
   # Busca todos os dados da empresa na data de referência selecionada
   df_DFP = dfp.dados_da_empresa_na_data_referencia(df_csv, cd_cvm, dt_refer, nivel_conta)
   
+  # Tabela com as contas da empresa
   df = fun.tabela_contas_empresa(df_DFP)
   
   # Remover contas nulas
@@ -235,6 +250,7 @@ elif analise == "Dados na data de referência - Sunburst":
   # Busca todos os dados da empresa na data de referência selecionada
   df_DFP = dfp.dados_da_empresa_na_data_referencia(df_csv, cd_cvm, dt_refer, nivel_conta)
   
+  # Tabela com as contas da empresa
   df = fun.tabela_contas_empresa(df_DFP)
   
   # Remover contas nulas
@@ -255,10 +271,14 @@ elif analise == "Dados na data de referência - Conta X subcontas - Gráfico de 
 
   # Busca todos os dados da empresa na data de referência selecionada
   df_DFP = dfp.dados_da_empresa_na_data_referencia(df_csv, cd_cvm, dt_refer, 10)
+  
+  # Tabela com as contas da empresa
+  df = fun.tabela_contas_empresa(df_DFP)
 
   # ----------------------------------------------------------------------------
 
-  cd_conta = st.selectbox('Conta', df_DFP[(df_DFP['NIVEL_CONTA'] <= nivel_conta)]['CD_CONTA'].unique()) # Seleciona a conta desejada
+  contas_pai = df_DFP['CD_CONTA_PAI'].unique()
+  cd_conta = st.selectbox('Conta', df_DFP[(df_DFP['NIVEL_CONTA'] <= nivel_conta) & (df_DFP['CD_CONTA'].isin(contas_pai))]['CD_CONTA'].unique()) # Seleciona a conta desejada
 
   # ----------------------------------------------------------------------------
 
@@ -282,10 +302,14 @@ elif analise == "Dados na data de referência - Conta X subcontas - Gráfico de 
 
   # Busca todos os dados da empresa na data de referência selecionada
   df_DFP = dfp.dados_da_empresa_na_data_referencia(df_csv, cd_cvm, dt_refer, 10)
+  
+  # Tabela com as contas da empresa
+  df = fun.tabela_contas_empresa(df_DFP)
 
   # ----------------------------------------------------------------------------
 
-  cd_conta = st.selectbox('Conta', df_DFP[(df_DFP['NIVEL_CONTA'] <= nivel_conta)]['CD_CONTA'].unique()) # Seleciona a conta desejada
+  contas_pai = df_DFP['CD_CONTA_PAI'].unique()
+  cd_conta = st.selectbox('Conta', df_DFP[(df_DFP['NIVEL_CONTA'] <= nivel_conta) & (df_DFP['CD_CONTA'].isin(contas_pai))]['CD_CONTA'].unique()) # Seleciona a conta desejada
 
   # ----------------------------------------------------------------------------
 
@@ -309,10 +333,14 @@ elif analise == "Dados na data de referência - Conta X subcontas - Treemap Squa
 
   # Busca todos os dados da empresa na data de referência selecionada
   df_DFP = dfp.dados_da_empresa_na_data_referencia(df_csv, cd_cvm, dt_refer, 10)
+  
+  # Tabela com as contas da empresa
+  df = fun.tabela_contas_empresa(df_DFP)
 
   # ----------------------------------------------------------------------------
 
-  cd_conta = st.selectbox('Conta', df_DFP[(df_DFP['NIVEL_CONTA'] <= nivel_conta)]['CD_CONTA'].unique()) # Seleciona a conta desejada
+  contas_pai = df_DFP['CD_CONTA_PAI'].unique()
+  cd_conta = st.selectbox('Conta', df_DFP[(df_DFP['NIVEL_CONTA'] <= nivel_conta) & (df_DFP['CD_CONTA'].isin(contas_pai))]['CD_CONTA'].unique()) # Seleciona a conta desejada
 
   # ----------------------------------------------------------------------------
 
@@ -337,10 +365,14 @@ elif analise == "Dados na data de referência - Conta X subcontas - Treemap Plot
 
   # Busca todos os dados da empresa na data de referência selecionada
   df_DFP = dfp.dados_da_empresa_na_data_referencia(df_csv, cd_cvm, dt_refer, 10)
+  
+  # Tabela com as contas da empresa
+  df = fun.tabela_contas_empresa(df_DFP)
 
   # ----------------------------------------------------------------------------
 
-  cd_conta = st.selectbox('Conta', df_DFP[(df_DFP['NIVEL_CONTA'] <= nivel_conta)]['CD_CONTA'].unique()) # Seleciona a conta desejada
+  contas_pai = df_DFP['CD_CONTA_PAI'].unique()
+  cd_conta = st.selectbox('Conta', df_DFP[(df_DFP['NIVEL_CONTA'] <= nivel_conta) & (df_DFP['CD_CONTA'].isin(contas_pai))]['CD_CONTA'].unique()) # Seleciona a conta desejada
 
   # ----------------------------------------------------------------------------
 
@@ -372,10 +404,14 @@ elif analise == "Dados na data de referência - Conta X subcontas - Sunburst":
 
   # Busca todos os dados da empresa na data de referência selecionada
   df_DFP = dfp.dados_da_empresa_na_data_referencia(df_csv, cd_cvm, dt_refer, 10)
+  
+  # Tabela com as contas da empresa
+  df = fun.tabela_contas_empresa(df_DFP)
 
   # ----------------------------------------------------------------------------
 
-  cd_conta = st.selectbox('Conta', df_DFP[(df_DFP['NIVEL_CONTA'] <= nivel_conta)]['CD_CONTA'].unique()) # Seleciona a conta desejada
+  contas_pai = df_DFP['CD_CONTA_PAI'].unique()
+  cd_conta = st.selectbox('Conta', df_DFP[(df_DFP['NIVEL_CONTA'] <= nivel_conta) & (df_DFP['CD_CONTA'].isin(contas_pai))]['CD_CONTA'].unique()) # Seleciona a conta desejada
 
   # ----------------------------------------------------------------------------
 
@@ -424,13 +460,15 @@ elif analise == "Evolução das contas":
   
   # Busca todos os dados da empresa até a data de referência selecionada
   df_DFP = dfp.dados_da_empresa(df_csv, cd_cvm, dt_refer, nivel_conta)
-
-  st.write("Tabela pivoteada com as contas da empresa na data de referência")
-  df = dfp.pivotear_tabela(df_DFP)
-  st.write(df)
+  
+  # Tabela com as contas da empresa
+  df = fun.tabela_contas_empresa(df_DFP, percentual=False)
   
   # Gráfico
   st.line_chart(df, x='DS_CONTA', y=fun.retorna_colunas_data(df))
+  
+  # Atributos
+  fun.atributos(df)
 
   # Tabs  
   tabs = st.tabs(fun.retorna_colunas_data(df))
@@ -450,8 +488,8 @@ elif analise == "Evolução das contas - Gráfico de barras horizontal":
   # Busca todos os dados da empresa até a data de referência selecionada
   df_DFP = dfp.dados_da_empresa(df_csv, cd_cvm, dt_refer, nivel_conta)
 
-  # Tabela legenda
-  st.dataframe(dfp.pivotear_tabela(df_DFP))
+  # Tabela com as contas da empresa
+  df = fun.tabela_contas_empresa(df_DFP, percentual=False)
 
   # Gráfico 1
   fun.grafico_1(dfp.pivotear_tabela(df_DFP), titulo, denom_cia, dt_refer)
@@ -463,8 +501,8 @@ elif analise == "Evolução das contas - Gráfico de linhas":
   # Busca todos os dados da empresa até a data de referência selecionada
   df_DFP = dfp.dados_da_empresa(df_csv, cd_cvm, dt_refer, nivel_conta)
 
-  # Tabela legenda
-  st.dataframe(dfp.pivotear_tabela(df_DFP))
+  # Tabela com as contas da empresa
+  df = fun.tabela_contas_empresa(df_DFP, percentual=False)
 
   # Gráfico de linha comparativo com a evolução das contas da empresa ao longo dos anos
   fun.grafico_3(df_DFP, titulo, denom_cia, dt_refer)
@@ -476,8 +514,8 @@ elif analise == "Evolução das contas - Treemap Plotly":
   # Busca todos os dados da empresa até a data de referência selecionada
   df_DFP = dfp.dados_da_empresa(df_csv, cd_cvm, dt_refer, nivel_conta)
   
-  st.write("Tabela pivoteada com as contas da empresa na data de referência")
-  st.dataframe(dfp.pivotear_tabela(df_DFP))
+  # Tabela com as contas da empresa
+  df = fun.tabela_contas_empresa(df_DFP, percentual=False)
   
   # Remover contas nulas
   df_DFP = df_DFP[pd.notna(df_DFP['DS_CONTA_PAI'])]
@@ -496,8 +534,8 @@ elif analise == "Evolução das contas - Sunburst":
   # Busca todos os dados da empresa até a data de referência selecionada
   df_DFP = dfp.dados_da_empresa(df_csv, cd_cvm, dt_refer, nivel_conta)
   
-  st.write("Tabela pivoteada com as contas da empresa na data de referência")
-  st.dataframe(dfp.pivotear_tabela(df_DFP))
+  # Tabela com as contas da empresa
+  df = fun.tabela_contas_empresa(df_DFP, percentual=False)
   
   # Remover contas nulas
   df_DFP = df_DFP[pd.notna(df_DFP['DS_CONTA_PAI'])]
@@ -519,8 +557,8 @@ elif analise == "Evolução das contas - Conta X conta":
   # Busca todos os dados da empresa até a data de referência selecionada
   df_DFP = dfp.dados_da_empresa(df_csv, cd_cvm, dt_refer, nivel_conta)
   
-  st.write("Tabela pivoteada com as contas da empresa na data de referência")
-  st.dataframe(dfp.pivotear_tabela(df_DFP))
+  # Tabela com as contas da empresa
+  df = fun.tabela_contas_empresa(df_DFP, percentual=False)
 
   contas = df_DFP['CD_CONTA'].unique()
   conta1 = st.selectbox('Conta 1', np.sort(contas).tolist()[::1])
@@ -547,11 +585,15 @@ elif analise == "Evolução das contas - Conta X conta":
 elif analise == "Evolução das contas - Conta X subcontas - Gráfico de linhas":
 
   # Busca todos os dados da empresa até a data de referência selecionada
-  df_DFP = dfp.dados_da_empresa(df_csv, cd_cvm, dt_refer, 10)
+  df_DFP = dfp.dados_da_empresa(df_csv, cd_cvm, dt_refer, 5)
+  
+  # Tabela com as contas da empresa
+  df = fun.tabela_contas_empresa(df_DFP, percentual=False)
 
   # ----------------------------------------------------------------------------
 
-  cd_conta = st.selectbox('Conta', df_DFP[(df_DFP['NIVEL_CONTA'] <= nivel_conta)]['CD_CONTA'].unique()) # Seleciona a conta desejada
+  contas_pai = df_DFP['CD_CONTA_PAI'].unique()
+  cd_conta = st.selectbox('Conta', df_DFP[(df_DFP['NIVEL_CONTA'] <= nivel_conta) & (df_DFP['CD_CONTA'].isin(contas_pai))]['CD_CONTA'].unique()) # Seleciona a conta desejada
 
   # ----------------------------------------------------------------------------
 
@@ -573,10 +615,14 @@ elif analise == "Evolução das contas - Conta X subcontas - Gráfico de barras 
 
   # Busca todos os dados da empresa até a data de referência selecionada
   df_DFP = dfp.dados_da_empresa(df_csv, cd_cvm, dt_refer, 10)
+  
+  # Tabela com as contas da empresa
+  df = fun.tabela_contas_empresa(df_DFP, percentual=False)
 
   # ----------------------------------------------------------------------------
 
-  cd_conta = st.selectbox('Conta', df_DFP[(df_DFP['NIVEL_CONTA'] <= nivel_conta)]['CD_CONTA'].unique()) # Seleciona a conta desejada
+  contas_pai = df_DFP['CD_CONTA_PAI'].unique()
+  cd_conta = st.selectbox('Conta', df_DFP[(df_DFP['NIVEL_CONTA'] <= nivel_conta) & (df_DFP['CD_CONTA'].isin(contas_pai))]['CD_CONTA'].unique()) # Seleciona a conta desejada
 
   # ----------------------------------------------------------------------------
 
@@ -598,10 +644,14 @@ elif analise == "Evolução das contas - Conta X subcontas - Gráfico de barras 
 
   # Busca todos os dados da empresa até a data de referência selecionada
   df_DFP = dfp.dados_da_empresa(df_csv, cd_cvm, dt_refer, 10)
+  
+  # Tabela com as contas da empresa
+  df = fun.tabela_contas_empresa(df_DFP, percentual=False)
 
   # ----------------------------------------------------------------------------
 
-  cd_conta = st.selectbox('Conta', df_DFP[(df_DFP['NIVEL_CONTA'] <= nivel_conta)]['CD_CONTA'].unique()) # Seleciona a conta desejada
+  contas_pai = df_DFP['CD_CONTA_PAI'].unique()
+  cd_conta = st.selectbox('Conta', df_DFP[(df_DFP['NIVEL_CONTA'] <= nivel_conta) & (df_DFP['CD_CONTA'].isin(contas_pai))]['CD_CONTA'].unique()) # Seleciona a conta desejada
 
   # ----------------------------------------------------------------------------
 
@@ -623,10 +673,14 @@ elif analise == "Evolução das contas - Conta X subcontas - Treemap Squarify":
 
   # Busca todos os dados da empresa até a data de referência selecionada
   df_DFP = dfp.dados_da_empresa(df_csv, cd_cvm, dt_refer, 10)
+  
+  # Tabela com as contas da empresa
+  df = fun.tabela_contas_empresa(df_DFP, percentual=False)
 
   # ----------------------------------------------------------------------------
 
-  cd_conta = st.selectbox('Conta', df_DFP[(df_DFP['NIVEL_CONTA'] <= nivel_conta)]['CD_CONTA'].unique()) # Seleciona a conta desejada
+  contas_pai = df_DFP['CD_CONTA_PAI'].unique()
+  cd_conta = st.selectbox('Conta', df_DFP[(df_DFP['NIVEL_CONTA'] <= nivel_conta) & (df_DFP['CD_CONTA'].isin(contas_pai))]['CD_CONTA'].unique()) # Seleciona a conta desejada
 
   # ----------------------------------------------------------------------------
 
@@ -649,10 +703,14 @@ elif analise == "Evolução das contas - Conta X subcontas - Treemap Plotly":
 
   # Busca todos os dados da empresa até a data de referência selecionada
   df_DFP = dfp.dados_da_empresa(df_csv, cd_cvm, dt_refer, 10)
+  
+  # Tabela com as contas da empresa
+  df = fun.tabela_contas_empresa(df_DFP, percentual=False)
 
   # ----------------------------------------------------------------------------
 
-  cd_conta = st.selectbox('Conta', df_DFP[(df_DFP['NIVEL_CONTA'] <= nivel_conta)]['CD_CONTA'].unique()) # Seleciona a conta desejada
+  contas_pai = df_DFP['CD_CONTA_PAI'].unique()
+  cd_conta = st.selectbox('Conta', df_DFP[(df_DFP['NIVEL_CONTA'] <= nivel_conta) & (df_DFP['CD_CONTA'].isin(contas_pai))]['CD_CONTA'].unique()) # Seleciona a conta desejada
 
   # ----------------------------------------------------------------------------
 
@@ -682,10 +740,14 @@ elif analise == "Evolução das contas - Conta X subcontas - Sunburst":
 
   # Busca todos os dados da empresa até a data de referência selecionada
   df_DFP = dfp.dados_da_empresa(df_csv, cd_cvm, dt_refer, 10)
+  
+  # Tabela com as contas da empresa
+  df = fun.tabela_contas_empresa(df_DFP, percentual=False)
 
   # ----------------------------------------------------------------------------
 
-  cd_conta = st.selectbox('Conta', df_DFP[(df_DFP['NIVEL_CONTA'] <= nivel_conta)]['CD_CONTA'].unique()) # Seleciona a conta desejada
+  contas_pai = df_DFP['CD_CONTA_PAI'].unique()
+  cd_conta = st.selectbox('Conta', df_DFP[(df_DFP['NIVEL_CONTA'] <= nivel_conta) & (df_DFP['CD_CONTA'].isin(contas_pai))]['CD_CONTA'].unique()) # Seleciona a conta desejada
 
   # ----------------------------------------------------------------------------
 

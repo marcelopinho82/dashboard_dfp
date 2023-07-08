@@ -19,11 +19,11 @@ def incluir_percentual(df):
   return df
 
 def tabela_contas_empresa(df_DFP, percentual=True):
-  st.write("Tabela pivoteada com as contas da empresa na data de referência")
+  st.write("Tabela pivoteada com as contas da empresa")
   df = dfp.pivotear_tabela(df_DFP)
   if percentual:  
     df = incluir_percentual(df)
-  st.write(mp.filter_dataframe(df))
+  st.write(df)
   return df
 
 # ------------------------------------------------------------------------------
@@ -504,12 +504,6 @@ def desenha_grafico_rede(df, node_color='NIVEL_CONTA:N', cmap='viridis', title='
   
 # ------------------------------------------------------------------------------ 
 
-
-# ------------------------------------------------------------------------------ 
-
-  
-# ------------------------------------------------------------------------------ 
-
 # Funções Plotly Network
 
 # ------------------------------------------------------------------------------ 
@@ -679,6 +673,98 @@ def gerar_waterfall(df, title='Waterfall'):
 
   st.plotly_chart(fig, use_container_width=True)
 
-# ------------------------------------------------------------------------------ 
+# ------------------------------------------------------------------------------
+
+def bruxaria(df):
+
+  import gc
+
+  # Dados
+
+  # Usando a função melt para transformar as colunas em linhas
+  df = df.melt(id_vars=['CD_CONTA', 'DS_CONTA'], var_name='DT_FIM_EXERC', value_name='Valor')
+
+  # Definindo a coluna 'Data' como o índice do DataFrame
+  df.set_index('DT_FIM_EXERC', inplace=True)
+
+  # Concatenando CD_CONTA com DS_CONTA para nomear as colunas
+  df['Conta'] = df['CD_CONTA'] + ' - ' + df['DS_CONTA']
+
+  # Removendo as colunas CD_CONTA e DS_CONTA
+  df.drop(['CD_CONTA', 'DS_CONTA'], axis=1, inplace=True)
+
+  # Usando a função pivot_table para transformar as linhas em colunas
+  df = df.pivot_table(index='DT_FIM_EXERC', columns='Conta', values='Valor')
+
+  # Redefinindo o índice
+  df.reset_index(inplace=True)
+  df.set_index("DT_FIM_EXERC", inplace=True) 
+
+  #df.to_csv("Dados.csv", index=False)
+  #del df
+  #gc.collect()  
+  #df = pd.read_csv("Dados.csv")
+  
+  return df
+  
+# ------------------------------------------------------------------------------
+
+def atributos(df):
+
+  df = bruxaria(df)
+    
+  # https://discuss.streamlit.io/t/after-upgrade-to-the-latest-version-now-this-error-id-showing-up-arrowinvalid/15794/6
+    
+  df_types = pd.DataFrame({
+      'Tipo': df.dtypes.astype(str),
+      'Count': df.count(),
+      'Valores Únicos': df.nunique(),
+      'Min': df.select_dtypes(include=[np.number]).min(),
+      'Max': df.select_dtypes(include=[np.number]).max(),
+      'Média': df.select_dtypes(include=[np.number]).mean(),
+      'Mediana': df.select_dtypes(include=[np.number]).median(),
+      'Desvio Padrão': df.select_dtypes(include=[np.number]).std()
+  })
+  st.write('**RESUMO**')
+  st.write(df_types)
+
+# ------------------------------------------------------------------------------
+
+  #st.write("ATRIBUTOS")
+  #df_datatypes = pd.DataFrame({"Atributo": df.columns, "Tipo": df.dtypes.astype(str).values})
+  #st.dataframe(df_datatypes)
+
+# ------------------------------------------------------------------------------
+
+  df_numericos = df.select_dtypes(exclude=['object']) # Dados Numéricos
+
+  if not df_numericos.empty:
+
+    if st.checkbox('ATRIBUTOS NUMÉRICOS'):
+  
+      #st.write(pd.DataFrame(df_numericos.describe().round(decimals=2).transpose()))
+
+      # --------------------------------------------------------------------------
+
+      numeric_cols = df.select_dtypes(include=['int16', 'int32', 'int64', 'float16', 'float32', 'float64']).columns.tolist()
+      num_cols_per_row = 5
+      
+      num_rows = (len(numeric_cols) + num_cols_per_row - 1) // num_cols_per_row
+
+      for i in range(0, len(numeric_cols), num_cols_per_row):
+          subset_cols = numeric_cols[i:i+num_cols_per_row]
+          num_subplots = len(subset_cols)
+          num_rows_current = (num_subplots + num_cols_per_row - 1) // num_cols_per_row
+    
+          cols = st.columns(num_subplots)
+    
+          for j, col in enumerate(subset_cols):
+              with cols[j % num_cols_per_row]:
+                  st.bar_chart(df[col])
+
+          st.write('---')
+
+      st.write(df)
+
 # ------------------------------------------------------------------------------ 
 
