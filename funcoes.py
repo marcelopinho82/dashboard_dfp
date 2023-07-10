@@ -9,21 +9,56 @@ import squarify
 import seaborn as sns
 import DFP as dfp
 import marcelo as mp
+import matplotlib.pyplot as plt
+
+# Obter a lista de todos os cmaps disponíveis
+cmaps = ['']
+cmaps.extend(plt.colormaps())
 
 # ------------------------------------------------------------------------------
 
 def incluir_percentual(df):
-  colunas = retorna_colunas_data(df)
-  df['%'] = ((df[colunas[1]] - df[colunas[0]]) / df[colunas[0]]) * 100
+
+  # Obter as colunas de data
+  colunas_data = retorna_colunas_data(df)
+  
+  df['%'] = ((df[colunas_data[1]] - df[colunas_data[0]]) / df[colunas_data[0]]) * 100
   df['T'] = np.select([df['%'].lt(0), df['%'].gt(0), df['%'].eq(0)], [u"\u2193", u"\u2191", u"\u2192"]) # https://stackoverflow.com/questions/59926609/how-can-add-trend-arrow-in-python-pandas  
+  
   return df
 
-def tabela_contas_empresa(df_DFP, percentual=True):
+# ------------------------------------------------------------------------------
+
+# Definir uma função para aplicar o estilo apenas à coluna "T"
+def destaque_negativo_positivo(valor):
+    """
+    Retorna uma string de estilo CSS para destacar valores negativos em vermelho e valores positivos em verde.
+    """
+    if valor == u"\u2193":
+        return 'color: red'
+    elif valor == u"\u2191":
+        return 'color: green'
+    else:
+        return ''
+
+# ------------------------------------------------------------------------------
+
+def tabela_contas_empresa(df_DFP, percentual=True, selected_cmap=None):
   st.write("Tabela pivoteada com as contas da empresa")
   df = dfp.pivotear_tabela(df_DFP)
+
   if percentual:  
     df = incluir_percentual(df)
-  st.write(df)
+    # https://docs.kanaries.net/tutorials/Streamlit/streamlit-dataframe
+    if selected_cmap:
+      st.dataframe(df.style.format(precision=2).background_gradient(cmap=selected_cmap, axis=0, subset=retorna_colunas_data(df)).applymap(destaque_negativo_positivo, subset=['T']))
+    else:
+      st.dataframe(df.style.format(precision=2).applymap(destaque_negativo_positivo, subset=['T']))
+  else:
+    if selected_cmap:
+      st.dataframe(df.style.format(precision=2).background_gradient(cmap=selected_cmap, axis=0, subset=retorna_colunas_data(df)))
+    else:
+      st.dataframe(df.style.format(precision=2))
   return df
 
 # ------------------------------------------------------------------------------
@@ -678,6 +713,7 @@ def gerar_waterfall(df, title='Waterfall'):
 def bruxaria(df):
 
   import gc
+  import os
 
   # Dados
 
@@ -698,13 +734,22 @@ def bruxaria(df):
 
   # Redefinindo o índice
   df.reset_index(inplace=True)
-  df.set_index("DT_FIM_EXERC", inplace=True) 
-
-  #df.to_csv("Dados.csv", index=False)
-  #del df
-  #gc.collect()  
-  #df = pd.read_csv("Dados.csv")
   
+  # Gambiarra de converter em .csv
+  df.to_csv("Dados.csv", index=False)
+  
+  # Deleta o objeto  
+  del df  
+  gc.collect()  
+  
+  # Lê novamente do .csv  
+  df = pd.read_csv("Dados.csv")
+  os.remove("Dados.csv")
+  
+  # Seta o índice para a Data
+  df.set_index("DT_FIM_EXERC", inplace=True)
+  
+  # Retorna o objeto
   return df
   
 # ------------------------------------------------------------------------------

@@ -16,6 +16,12 @@ import sys
 import marcelo as mp
 import DFP as dfp
 import funcoes as fun
+import matplotlib.pyplot as plt
+import plotly.express as px
+
+# Obter a lista de todos os cmaps disponíveis
+cmaps = ['']
+cmaps.extend(plt.colormaps())
 
 # ------------------------------------------------------------------------------
 
@@ -113,8 +119,11 @@ if analise == "Dados na data de referência":
   # Busca todos os dados da empresa na data de referência selecionada
   df_DFP = dfp.dados_da_empresa_na_data_referencia(df_csv, cd_cvm, dt_refer, nivel_conta)
 
+  # Criar um selectbox com os cmaps
+  selected_cmap = st.selectbox('Selecione um cmap', cmaps)
+
   # Tabela com as contas da empresa
-  df = fun.tabela_contas_empresa(df_DFP)
+  df = fun.tabela_contas_empresa(df_DFP, percentual=True, selected_cmap=selected_cmap)
   
   # Gráfico
   st.line_chart(df, x='DS_CONTA', y=fun.retorna_colunas_data(df))  
@@ -140,8 +149,11 @@ if analise == "Dados na data de referência - Gráfico de rede - NetworkX":
   # Busca todos os dados da empresa na data de referência selecionada
   df_DFP = dfp.dados_da_empresa_na_data_referencia(df_csv, cd_cvm, dt_refer, nivel_conta)
 
+  # Criar um selectbox com os cmaps
+  selected_cmap = st.selectbox('Selecione um cmap', cmaps)
+
   # Tabela com as contas da empresa
-  df = fun.tabela_contas_empresa(df_DFP)
+  df = fun.tabela_contas_empresa(df_DFP, percentual=True, selected_cmap=selected_cmap)
   
   # Gráfico
   node_color = st.selectbox('Atributo:', ['NIVEL_CONTA:N','ST_CONTA_FIXA:N','VL_CONTA:Q','degree:Q'])
@@ -163,8 +175,11 @@ if analise == "Dados na data de referência - Gráfico de rede - Plotly":
   # Busca todos os dados da empresa na data de referência selecionada
   df_DFP = dfp.dados_da_empresa_na_data_referencia(df_csv, cd_cvm, dt_refer, nivel_conta)
   
+  # Criar um selectbox com os cmaps
+  selected_cmap = st.selectbox('Selecione um cmap', cmaps)
+  
   # Tabela com as contas da empresa
-  df = fun.tabela_contas_empresa(df_DFP)
+  df = fun.tabela_contas_empresa(df_DFP, percentual=True, selected_cmap=selected_cmap)
   
   # Gráfico
   node_label = st.selectbox('Atributo:', ['','DS_CONTA','CD_CONTA'])  
@@ -185,8 +200,11 @@ if analise == "Dados na data de referência - Waterfall":
   # Busca todos os dados da empresa na data de referência selecionada
   df_DFP = dfp.dados_da_empresa_na_data_referencia(df_csv, cd_cvm, dt_refer, nivel_conta)
   
+  # Criar um selectbox com os cmaps
+  selected_cmap = st.selectbox('Selecione um cmap', cmaps)
+  
   # Tabela com as contas da empresa
-  df = fun.tabela_contas_empresa(df_DFP)
+  df = fun.tabela_contas_empresa(df_DFP, percentual=True, selected_cmap=selected_cmap)
     
   # Tabs  
   tabs = st.tabs(fun.retorna_colunas_data(df))
@@ -204,8 +222,11 @@ elif analise == "Dados na data de referência - Gráfico de barras horizontal":
   # Busca todos os dados da empresa na data de referência selecionada
   df_DFP = dfp.dados_da_empresa_na_data_referencia(df_csv, cd_cvm, dt_refer, nivel_conta)
   
+  # Criar um selectbox com os cmaps
+  selected_cmap = st.selectbox('Selecione um cmap', cmaps)
+  
   # Tabela com as contas da empresa
-  df = fun.tabela_contas_empresa(df_DFP)
+  df = fun.tabela_contas_empresa(df_DFP, percentual=True, selected_cmap=selected_cmap)
 
   # Gráfico 1
   fun.grafico_1(dfp.pivotear_tabela(df_DFP), titulo, denom_cia, dt_refer)
@@ -217,8 +238,11 @@ elif analise == "Dados na data de referência - Gráfico de barras vertical":
   # Busca todos os dados da empresa na data de referência selecionada
   df_DFP = dfp.dados_da_empresa_na_data_referencia(df_csv, cd_cvm, dt_refer, nivel_conta)
   
+  # Criar um selectbox com os cmaps
+  selected_cmap = st.selectbox('Selecione um cmap', cmaps)
+  
   # Tabela com as contas da empresa
-  df = fun.tabela_contas_empresa(df_DFP)
+  df = fun.tabela_contas_empresa(df_DFP, percentual=True, selected_cmap=selected_cmap)
 
   # Gráfico comparativo último X penúltimo exercício separado
   fun.grafico_2(df_DFP, titulo, denom_cia, dt_refer)
@@ -230,8 +254,11 @@ elif analise == "Dados na data de referência - Treemap Plotly":
   # Busca todos os dados da empresa na data de referência selecionada
   df_DFP = dfp.dados_da_empresa_na_data_referencia(df_csv, cd_cvm, dt_refer, nivel_conta)
   
+  # Criar um selectbox com os cmaps
+  selected_cmap = st.selectbox('Selecione um cmap', cmaps)
+  
   # Tabela com as contas da empresa
-  df = fun.tabela_contas_empresa(df_DFP)
+  df = fun.tabela_contas_empresa(df_DFP, percentual=True, selected_cmap=selected_cmap)
   
   # Remover contas nulas
   df_DFP = df_DFP[pd.notna(df_DFP['DS_CONTA_PAI'])]
@@ -240,7 +267,7 @@ elif analise == "Dados na data de referência - Treemap Plotly":
   color = st.selectbox('Atributo:', [None, 'VL_CONTA','DS_CONTA','DS_CONTA_PAI'])
   color_continuous_scale = None
   if color == "VL_CONTA":
-    color_continuous_scale = st.selectbox('Opções de escala de cores:', ['Viridis','Greys','YlGnBu','Greens','YlOrRd','Bluered','RdBu','Reds','Blues','Picnic','Rainbow','Portland','Jet','Hot','Blackbody','Earth','Electric'])
+    color_continuous_scale = st.selectbox('Opções de escala de cores:', px.colors.named_colorscales())    
   fun.gerar_treemap(df_DFP, color_continuous_scale=color_continuous_scale, title=titulo, color=color)
   
 # ------------------------------------------------------------------------------
@@ -250,8 +277,11 @@ elif analise == "Dados na data de referência - Sunburst":
   # Busca todos os dados da empresa na data de referência selecionada
   df_DFP = dfp.dados_da_empresa_na_data_referencia(df_csv, cd_cvm, dt_refer, nivel_conta)
   
+  # Criar um selectbox com os cmaps
+  selected_cmap = st.selectbox('Selecione um cmap', cmaps)
+  
   # Tabela com as contas da empresa
-  df = fun.tabela_contas_empresa(df_DFP)
+  df = fun.tabela_contas_empresa(df_DFP, percentual=True, selected_cmap=selected_cmap)
   
   # Remover contas nulas
   df_DFP = df_DFP[pd.notna(df_DFP['DS_CONTA_PAI'])]
@@ -260,7 +290,7 @@ elif analise == "Dados na data de referência - Sunburst":
   color = st.selectbox('Atributo:', [None, 'VL_CONTA','DS_CONTA','DS_CONTA_PAI'])
   color_continuous_scale = None
   if color == "VL_CONTA":
-    color_continuous_scale = st.selectbox('Opções de escala de cores:', ['Viridis','Greys','YlGnBu','Greens','YlOrRd','Bluered','RdBu','Reds','Blues','Picnic','Rainbow','Portland','Jet','Hot','Blackbody','Earth','Electric'])
+    color_continuous_scale = st.selectbox('Opções de escala de cores:', px.colors.named_colorscales())
   fun.gerar_sunburst(df_DFP, color_continuous_scale=color_continuous_scale, title=titulo, color=color)
 
 # ------------------------------------------------------------------------------
@@ -272,8 +302,11 @@ elif analise == "Dados na data de referência - Conta X subcontas - Gráfico de 
   # Busca todos os dados da empresa na data de referência selecionada
   df_DFP = dfp.dados_da_empresa_na_data_referencia(df_csv, cd_cvm, dt_refer, 10)
   
+  # Criar um selectbox com os cmaps
+  selected_cmap = st.selectbox('Selecione um cmap', cmaps)
+  
   # Tabela com as contas da empresa
-  df = fun.tabela_contas_empresa(df_DFP)
+  df = fun.tabela_contas_empresa(df_DFP, percentual=True, selected_cmap=selected_cmap)
 
   # ----------------------------------------------------------------------------
 
@@ -303,8 +336,11 @@ elif analise == "Dados na data de referência - Conta X subcontas - Gráfico de 
   # Busca todos os dados da empresa na data de referência selecionada
   df_DFP = dfp.dados_da_empresa_na_data_referencia(df_csv, cd_cvm, dt_refer, 10)
   
+  # Criar um selectbox com os cmaps
+  selected_cmap = st.selectbox('Selecione um cmap', cmaps)
+  
   # Tabela com as contas da empresa
-  df = fun.tabela_contas_empresa(df_DFP)
+  df = fun.tabela_contas_empresa(df_DFP, percentual=True, selected_cmap=selected_cmap)
 
   # ----------------------------------------------------------------------------
 
@@ -334,8 +370,11 @@ elif analise == "Dados na data de referência - Conta X subcontas - Treemap Squa
   # Busca todos os dados da empresa na data de referência selecionada
   df_DFP = dfp.dados_da_empresa_na_data_referencia(df_csv, cd_cvm, dt_refer, 10)
   
+  # Criar um selectbox com os cmaps
+  selected_cmap = st.selectbox('Selecione um cmap', cmaps)
+  
   # Tabela com as contas da empresa
-  df = fun.tabela_contas_empresa(df_DFP)
+  df = fun.tabela_contas_empresa(df_DFP, percentual=True, selected_cmap=selected_cmap)
 
   # ----------------------------------------------------------------------------
 
@@ -366,8 +405,11 @@ elif analise == "Dados na data de referência - Conta X subcontas - Treemap Plot
   # Busca todos os dados da empresa na data de referência selecionada
   df_DFP = dfp.dados_da_empresa_na_data_referencia(df_csv, cd_cvm, dt_refer, 10)
   
+  # Criar um selectbox com os cmaps
+  selected_cmap = st.selectbox('Selecione um cmap', cmaps)
+  
   # Tabela com as contas da empresa
-  df = fun.tabela_contas_empresa(df_DFP)
+  df = fun.tabela_contas_empresa(df_DFP, percentual=True, selected_cmap=selected_cmap)
 
   # ----------------------------------------------------------------------------
 
@@ -395,7 +437,7 @@ elif analise == "Dados na data de referência - Conta X subcontas - Treemap Plot
   color = st.selectbox('Atributo:', ['VL_CONTA','DS_CONTA','DS_CONTA_PAI'])
   color_continuous_scale = None
   if color == "VL_CONTA":
-    color_continuous_scale = st.selectbox('Opções de escala de cores:', ['Viridis','Greys','YlGnBu','Greens','YlOrRd','Bluered','RdBu','Reds','Blues','Picnic','Rainbow','Portland','Jet','Hot','Blackbody','Earth','Electric'])
+    color_continuous_scale = st.selectbox('Opções de escala de cores:', px.colors.named_colorscales())
   fun.gerar_treemap(df_filho, color_continuous_scale=color_continuous_scale, title=titulo, color=color)
 
 # ------------------------------------------------------------------------------
@@ -405,8 +447,11 @@ elif analise == "Dados na data de referência - Conta X subcontas - Sunburst":
   # Busca todos os dados da empresa na data de referência selecionada
   df_DFP = dfp.dados_da_empresa_na_data_referencia(df_csv, cd_cvm, dt_refer, 10)
   
+  # Criar um selectbox com os cmaps
+  selected_cmap = st.selectbox('Selecione um cmap', cmaps)
+  
   # Tabela com as contas da empresa
-  df = fun.tabela_contas_empresa(df_DFP)
+  df = fun.tabela_contas_empresa(df_DFP, percentual=True, selected_cmap=selected_cmap)
 
   # ----------------------------------------------------------------------------
 
@@ -434,7 +479,7 @@ elif analise == "Dados na data de referência - Conta X subcontas - Sunburst":
   color = st.selectbox('Atributo:', [None, 'VL_CONTA','DS_CONTA','DS_CONTA_PAI'])
   color_continuous_scale = None
   if color == "VL_CONTA":
-    color_continuous_scale = st.selectbox('Opções de escala de cores:', ['Viridis','Greys','YlGnBu','Greens','YlOrRd','Bluered','RdBu','Reds','Blues','Picnic','Rainbow','Portland','Jet','Hot','Blackbody','Earth','Electric'])
+    color_continuous_scale = st.selectbox('Opções de escala de cores:', px.colors.named_colorscales())
   fun.gerar_sunburst(df_filho, color_continuous_scale=color_continuous_scale, title=titulo, color=color)
 
 # ------------------------------------------------------------------------------
@@ -461,8 +506,11 @@ elif analise == "Evolução das contas":
   # Busca todos os dados da empresa até a data de referência selecionada
   df_DFP = dfp.dados_da_empresa(df_csv, cd_cvm, dt_refer, nivel_conta)
   
+  # Criar um selectbox com os cmaps
+  selected_cmap = st.selectbox('Selecione um cmap', cmaps)
+  
   # Tabela com as contas da empresa
-  df = fun.tabela_contas_empresa(df_DFP, percentual=False)
+  df = fun.tabela_contas_empresa(df_DFP, percentual=False, selected_cmap=selected_cmap)
   
   # Gráfico
   st.line_chart(df, x='DS_CONTA', y=fun.retorna_colunas_data(df))
@@ -488,8 +536,11 @@ elif analise == "Evolução das contas - Gráfico de barras horizontal":
   # Busca todos os dados da empresa até a data de referência selecionada
   df_DFP = dfp.dados_da_empresa(df_csv, cd_cvm, dt_refer, nivel_conta)
 
+  # Criar um selectbox com os cmaps
+  selected_cmap = st.selectbox('Selecione um cmap', cmaps)
+
   # Tabela com as contas da empresa
-  df = fun.tabela_contas_empresa(df_DFP, percentual=False)
+  df = fun.tabela_contas_empresa(df_DFP, percentual=False, selected_cmap=selected_cmap)
 
   # Gráfico 1
   fun.grafico_1(dfp.pivotear_tabela(df_DFP), titulo, denom_cia, dt_refer)
@@ -501,8 +552,11 @@ elif analise == "Evolução das contas - Gráfico de linhas":
   # Busca todos os dados da empresa até a data de referência selecionada
   df_DFP = dfp.dados_da_empresa(df_csv, cd_cvm, dt_refer, nivel_conta)
 
+  # Criar um selectbox com os cmaps
+  selected_cmap = st.selectbox('Selecione um cmap', cmaps)
+
   # Tabela com as contas da empresa
-  df = fun.tabela_contas_empresa(df_DFP, percentual=False)
+  df = fun.tabela_contas_empresa(df_DFP, percentual=False, selected_cmap=selected_cmap)
 
   # Gráfico de linha comparativo com a evolução das contas da empresa ao longo dos anos
   fun.grafico_3(df_DFP, titulo, denom_cia, dt_refer)
@@ -514,8 +568,11 @@ elif analise == "Evolução das contas - Treemap Plotly":
   # Busca todos os dados da empresa até a data de referência selecionada
   df_DFP = dfp.dados_da_empresa(df_csv, cd_cvm, dt_refer, nivel_conta)
   
+  # Criar um selectbox com os cmaps
+  selected_cmap = st.selectbox('Selecione um cmap', cmaps)
+  
   # Tabela com as contas da empresa
-  df = fun.tabela_contas_empresa(df_DFP, percentual=False)
+  df = fun.tabela_contas_empresa(df_DFP, percentual=False, selected_cmap=selected_cmap)
   
   # Remover contas nulas
   df_DFP = df_DFP[pd.notna(df_DFP['DS_CONTA_PAI'])]
@@ -524,7 +581,7 @@ elif analise == "Evolução das contas - Treemap Plotly":
   color = st.selectbox('Atributo:', ['VL_CONTA','DS_CONTA','DS_CONTA_PAI'])
   color_continuous_scale = None
   if color == "VL_CONTA":
-    color_continuous_scale = st.selectbox('Opções de escala de cores:', ['Viridis','Greys','YlGnBu','Greens','YlOrRd','Bluered','RdBu','Reds','Blues','Picnic','Rainbow','Portland','Jet','Hot','Blackbody','Earth','Electric'])
+    color_continuous_scale = st.selectbox('Opções de escala de cores:', px.colors.named_colorscales())
   fun.gerar_treemap(df_DFP, color_continuous_scale=color_continuous_scale, title=titulo, color=color)
 
 # ------------------------------------------------------------------------------
@@ -534,8 +591,11 @@ elif analise == "Evolução das contas - Sunburst":
   # Busca todos os dados da empresa até a data de referência selecionada
   df_DFP = dfp.dados_da_empresa(df_csv, cd_cvm, dt_refer, nivel_conta)
   
+  # Criar um selectbox com os cmaps
+  selected_cmap = st.selectbox('Selecione um cmap', cmaps)
+  
   # Tabela com as contas da empresa
-  df = fun.tabela_contas_empresa(df_DFP, percentual=False)
+  df = fun.tabela_contas_empresa(df_DFP, percentual=False, selected_cmap=selected_cmap)
   
   # Remover contas nulas
   df_DFP = df_DFP[pd.notna(df_DFP['DS_CONTA_PAI'])]
@@ -544,7 +604,7 @@ elif analise == "Evolução das contas - Sunburst":
   color = st.selectbox('Atributo:', [None, 'VL_CONTA','DS_CONTA','DS_CONTA_PAI'])
   color_continuous_scale = None
   if color == "VL_CONTA":
-    color_continuous_scale = st.selectbox('Opções de escala de cores:', ['Viridis','Greys','YlGnBu','Greens','YlOrRd','Bluered','RdBu','Reds','Blues','Picnic','Rainbow','Portland','Jet','Hot','Blackbody','Earth','Electric'])
+    color_continuous_scale = st.selectbox('Opções de escala de cores:', px.colors.named_colorscales())
   fun.gerar_sunburst(df_DFP, color_continuous_scale=color_continuous_scale, title=titulo, color=color)
 
 # ------------------------------------------------------------------------------
@@ -557,8 +617,11 @@ elif analise == "Evolução das contas - Conta X conta":
   # Busca todos os dados da empresa até a data de referência selecionada
   df_DFP = dfp.dados_da_empresa(df_csv, cd_cvm, dt_refer, nivel_conta)
   
+  # Criar um selectbox com os cmaps
+  selected_cmap = st.selectbox('Selecione um cmap', cmaps)
+  
   # Tabela com as contas da empresa
-  df = fun.tabela_contas_empresa(df_DFP, percentual=False)
+  df = fun.tabela_contas_empresa(df_DFP, percentual=False, selected_cmap=selected_cmap)
 
   contas = df_DFP['CD_CONTA'].unique()
   conta1 = st.selectbox('Conta 1', np.sort(contas).tolist()[::1])
@@ -587,8 +650,11 @@ elif analise == "Evolução das contas - Conta X subcontas - Gráfico de linhas"
   # Busca todos os dados da empresa até a data de referência selecionada
   df_DFP = dfp.dados_da_empresa(df_csv, cd_cvm, dt_refer, 5)
   
+  # Criar um selectbox com os cmaps
+  selected_cmap = st.selectbox('Selecione um cmap', cmaps)
+  
   # Tabela com as contas da empresa
-  df = fun.tabela_contas_empresa(df_DFP, percentual=False)
+  df = fun.tabela_contas_empresa(df_DFP, percentual=False, selected_cmap=selected_cmap)
 
   # ----------------------------------------------------------------------------
 
@@ -616,8 +682,11 @@ elif analise == "Evolução das contas - Conta X subcontas - Gráfico de barras 
   # Busca todos os dados da empresa até a data de referência selecionada
   df_DFP = dfp.dados_da_empresa(df_csv, cd_cvm, dt_refer, 10)
   
+  # Criar um selectbox com os cmaps
+  selected_cmap = st.selectbox('Selecione um cmap', cmaps)
+  
   # Tabela com as contas da empresa
-  df = fun.tabela_contas_empresa(df_DFP, percentual=False)
+  df = fun.tabela_contas_empresa(df_DFP, percentual=False, selected_cmap=selected_cmap)
 
   # ----------------------------------------------------------------------------
 
@@ -645,8 +714,11 @@ elif analise == "Evolução das contas - Conta X subcontas - Gráfico de barras 
   # Busca todos os dados da empresa até a data de referência selecionada
   df_DFP = dfp.dados_da_empresa(df_csv, cd_cvm, dt_refer, 10)
   
+  # Criar um selectbox com os cmaps
+  selected_cmap = st.selectbox('Selecione um cmap', cmaps)
+  
   # Tabela com as contas da empresa
-  df = fun.tabela_contas_empresa(df_DFP, percentual=False)
+  df = fun.tabela_contas_empresa(df_DFP, percentual=False, selected_cmap=selected_cmap)
 
   # ----------------------------------------------------------------------------
 
@@ -674,8 +746,11 @@ elif analise == "Evolução das contas - Conta X subcontas - Treemap Squarify":
   # Busca todos os dados da empresa até a data de referência selecionada
   df_DFP = dfp.dados_da_empresa(df_csv, cd_cvm, dt_refer, 10)
   
+  # Criar um selectbox com os cmaps
+  selected_cmap = st.selectbox('Selecione um cmap', cmaps)
+  
   # Tabela com as contas da empresa
-  df = fun.tabela_contas_empresa(df_DFP, percentual=False)
+  df = fun.tabela_contas_empresa(df_DFP, percentual=False, selected_cmap=selected_cmap)
 
   # ----------------------------------------------------------------------------
 
@@ -704,8 +779,11 @@ elif analise == "Evolução das contas - Conta X subcontas - Treemap Plotly":
   # Busca todos os dados da empresa até a data de referência selecionada
   df_DFP = dfp.dados_da_empresa(df_csv, cd_cvm, dt_refer, 10)
   
+  # Criar um selectbox com os cmaps
+  selected_cmap = st.selectbox('Selecione um cmap', cmaps)
+  
   # Tabela com as contas da empresa
-  df = fun.tabela_contas_empresa(df_DFP, percentual=False)
+  df = fun.tabela_contas_empresa(df_DFP, percentual=False, selected_cmap=selected_cmap)
 
   # ----------------------------------------------------------------------------
 
@@ -731,7 +809,7 @@ elif analise == "Evolução das contas - Conta X subcontas - Treemap Plotly":
   color = st.selectbox('Atributo:', ['VL_CONTA','DS_CONTA','DS_CONTA_PAI'])
   color_continuous_scale = None
   if color == "VL_CONTA":
-    color_continuous_scale = st.selectbox('Opções de escala de cores:', ['Viridis','Greys','YlGnBu','Greens','YlOrRd','Bluered','RdBu','Reds','Blues','Picnic','Rainbow','Portland','Jet','Hot','Blackbody','Earth','Electric'])
+    color_continuous_scale = st.selectbox('Opções de escala de cores:', px.colors.named_colorscales())
   fun.gerar_treemap(df_filho, color_continuous_scale=color_continuous_scale, title=titulo, color=color)
 
 # ------------------------------------------------------------------------------ 
@@ -741,8 +819,11 @@ elif analise == "Evolução das contas - Conta X subcontas - Sunburst":
   # Busca todos os dados da empresa até a data de referência selecionada
   df_DFP = dfp.dados_da_empresa(df_csv, cd_cvm, dt_refer, 10)
   
+  # Criar um selectbox com os cmaps
+  selected_cmap = st.selectbox('Selecione um cmap', cmaps)
+  
   # Tabela com as contas da empresa
-  df = fun.tabela_contas_empresa(df_DFP, percentual=False)
+  df = fun.tabela_contas_empresa(df_DFP, percentual=False, selected_cmap=selected_cmap)
 
   # ----------------------------------------------------------------------------
 
@@ -768,5 +849,5 @@ elif analise == "Evolução das contas - Conta X subcontas - Sunburst":
   color = st.selectbox('Atributo:', [None, 'VL_CONTA','DS_CONTA','DS_CONTA_PAI'])
   color_continuous_scale = None
   if color == "VL_CONTA":
-    color_continuous_scale = st.selectbox('Opções de escala de cores:', ['Viridis','Greys','YlGnBu','Greens','YlOrRd','Bluered','RdBu','Reds','Blues','Picnic','Rainbow','Portland','Jet','Hot','Blackbody','Earth','Electric'])
+    color_continuous_scale = st.selectbox('Opções de escala de cores:', px.colors.named_colorscales())
   fun.gerar_sunburst(df_filho, color_continuous_scale=color_continuous_scale, title=titulo, color=color)

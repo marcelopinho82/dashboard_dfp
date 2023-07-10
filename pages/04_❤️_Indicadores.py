@@ -56,6 +56,8 @@ df = fun.tabela_contas_empresa(df_concatenado, percentual=False)
 # https://www.statology.org/pandas-check-if-string-contains-multiple-substrings/
 # https://analisemacro.com.br/economia/indicadores/automatizando-a-coleta-de-dados-de-demonstrativos-financeiros-como-comecar/
 
+st.header("Quais indicadores analisar? 🤔")
+
 st.subheader("ROE - Retorno sobre o patrimônio (Return on equity)")
 
 # Buscar os dados da primeira linha
