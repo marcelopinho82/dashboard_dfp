@@ -31,6 +31,8 @@ unidecode
 vega_datasets
 wordcloud
 xarray
+fbprophet
+pandas_market_calendars
 yellowbrick
 squarify
 
