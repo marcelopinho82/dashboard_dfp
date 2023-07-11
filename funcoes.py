@@ -9,22 +9,68 @@ import squarify
 import seaborn as sns
 import DFP as dfp
 import marcelo as mp
-import matplotlib.pyplot as plt
+import plotly.graph_objects as go
+
+# ------------------------------------------------------------------------------ 
 
 # Obter a lista de todos os cmaps disponíveis
 cmaps = ['']
 cmaps.extend(plt.colormaps())
 
-# ------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------ 
 
-def incluir_percentual(df):
+def vega_schemes(scheme):
+
+  # https://vega.github.io/vega/docs/schemes/
+
+  # Categorical Schemes
+  # Categorical color schemes can be used to encode discrete data values, each representing a distinct category.
+  if scheme == "categorical":
+    return ["accent", "category10", "category20", "category20b", "category20c", "dark2", "paired", "pastel1", "pastel2", "set1", "set2", "set3", "tableau10", "tableau20"]
+
+  # Sequential Single-Hue Schemes
+  # Sequential color schemes can be used to encode quantitative values. These color ramps are designed to encode increasing numeric values. Hover over a scheme and click the “View Discrete” link to toggle display of discretized palettes suitable for quantile, quantize, threshold, or ordinal scales.
+  if scheme == "sequential_single_hue":
+    return ["blues", "tealblues", "teals", "greens", "browns", "oranges", "reds", "purples", "warmgreys", "greys"]
+
+  # Sequential Multi-Hue Schemes
+  # Sequential color schemes can be used to encode quantitative values. These color ramps are designed to encode increasing numeric values, but use additional hues for more color discrimination, which may be useful for visualizations such as heatmaps. However, beware that using multiple hues may cause viewers to inaccurately see the data range as grouped into color-coded clusters. Hover over a scheme and click the “View Discrete” link to toggle display of discretized palettes suitable for quantile, quantize, threshold, or ordinal scales.
+  if scheme == "sequential_multi_hue":
+    return ["viridis", "magma", "inferno", "plasma", "cividis", "turbo", "bluegreen", "bluepurple", "goldgreen", "goldorange", "goldred", "greenblue", "orangered", "purplebluegreen", "purpleblue", "purplered", "redpurple", "yellowgreenblue", "yellowgreen", "yelloworangebrown", "yelloworangered"]
+
+  # For Dark Backgrounds
+  if scheme == "for_dark_backgrounds":
+    return ["darkblue", "darkgold", "darkgreen", "darkmulti", "darkred"]
+    
+  # For Light Backgrounds
+  if scheme == "for_light_backgrounds":
+    return ["lightgreyred", "lightgreyteal", "lightmulti", "lightorange", "lighttealblue"]
+
+  # Diverging Schemes
+  # Diverging color schemes can be used to encode quantitative values with a meaningful mid-point, such as zero or the average value. Color ramps with different hues diverge with increasing saturation to highlight the values below and above the mid-point. Hover over a scheme and click the “View Discrete” link to toggle display of discretized palettes suitable for quantile, quantize, threshold, or ordinal scales.
+  if scheme == "diverging":
+    return ["blueorange", "brownbluegreen", "purplegreen", "pinkyellowgreen", "purpleorange", "redblue", "redgrey", "redyellowblue", "redyellowgreen", "spectral"]
+
+  # Cyclical Schemes
+  # Cyclical color schemes may be used to highlight periodic patterns in continuous data. However, these schemes are not well suited to accurately convey value differences.
+  if scheme == "cyclical":
+    return ["rainbow", "sinebow"]
+
+# ------------------------------------------------------------------------------ 
+
+def incluir_percentual(df_ref):
+
+  # Faz uma cópia do dataframe
+  df = df_ref.copy()
 
   # Obter as colunas de data
-  colunas_data = retorna_colunas_data(df)
-  
-  df['%'] = ((df[colunas_data[1]] - df[colunas_data[0]]) / df[colunas_data[0]]) * 100
+  colunas_data = retorna_colunas_data(df_ref)
+
+  # Acrescenta novas colunas  
+  df['%'] = ((df_ref[colunas_data[1]] - df_ref[colunas_data[0]]) / df_ref[colunas_data[0]]) * 100
   df['T'] = np.select([df['%'].lt(0), df['%'].gt(0), df['%'].eq(0)], [u"\u2193", u"\u2191", u"\u2192"]) # https://stackoverflow.com/questions/59926609/how-can-add-trend-arrow-in-python-pandas  
-  
+ 
+  # Retorna a cópia
   return df
 
 # ------------------------------------------------------------------------------
@@ -43,25 +89,30 @@ def destaque_negativo_positivo(valor):
 
 # ------------------------------------------------------------------------------
 
-def tabela_contas_empresa(df_DFP, percentual=True, selected_cmap=None):
-  st.write("Tabela pivoteada com as contas da empresa")
-  df = dfp.pivotear_tabela(df_DFP)
+def tabela_com_estilo(df, cmap=None, axis=0):
 
-  if percentual:  
-    df = incluir_percentual(df)
-    # https://docs.kanaries.net/tutorials/Streamlit/streamlit-dataframe
-    if selected_cmap:
-      st.dataframe(df.style.format(precision=2).background_gradient(cmap=selected_cmap, axis=0, subset=retorna_colunas_data(df)).applymap(destaque_negativo_positivo, subset=['T']))
+  # https://docs.kanaries.net/tutorials/Streamlit/streamlit-dataframe
+  if '%' in df.columns:
+    if cmap:
+      st.dataframe(df.style.format(precision=2).background_gradient(cmap=cmap, axis=axis, subset=retorna_colunas_data(df)).applymap(destaque_negativo_positivo, subset=['T']))
     else:
       st.dataframe(df.style.format(precision=2).applymap(destaque_negativo_positivo, subset=['T']))
   else:
-    if selected_cmap:
-      st.dataframe(df.style.format(precision=2).background_gradient(cmap=selected_cmap, axis=0, subset=retorna_colunas_data(df)))
+    if cmap:
+      st.dataframe(df.style.format(precision=2).background_gradient(cmap=cmap, axis=axis, subset=retorna_colunas_data(df)))
     else:
       st.dataframe(df.style.format(precision=2))
-  return df
 
 # ------------------------------------------------------------------------------
+
+def tabela_contas_empresa(df_DFP, percentual=True):
+  st.write("Tabela pivoteada com as contas da empresa")
+  df = dfp.pivotear_tabela(df_DFP)
+  if percentual:  
+    df = incluir_percentual(df)
+  return df
+
+# ------------------------------------------------------------------------------ 
 
 def filtrar_df(df, criterios):
     filtered_df = df.copy()    
@@ -70,17 +121,23 @@ def filtrar_df(df, criterios):
         filtered_df = filtered_df[(filtered_df[column].str.contains(value))]    
     return filtered_df
     
+# ------------------------------------------------------------------------------ 
+    
 def retorna_linhas(df_concatenado, criterios1, criterios2):
   df1 = retorna_linha(df_concatenado, criterios1)
   df2 = retorna_linha(df_concatenado, criterios2)
   df = pd.concat([df1, df2], ignore_index=True)
   st.write(df)
   return df
+  
+# ------------------------------------------------------------------------------ 
 
 def retorna_linha(df_concatenado, criterios):
   df = filtrar_df(df_concatenado, criterios).sort_values(by=['DT_FIM_EXERC'])
   df = dfp.pivotear_tabela(df).max().to_frame().T
   return df
+  
+# ------------------------------------------------------------------------------ 
   
 def calcula_indicador(df, nome):
   indicador = (df.iloc[0][retorna_colunas_data(df)] / df.iloc[1][retorna_colunas_data(df)]) * 100
@@ -88,7 +145,7 @@ def calcula_indicador(df, nome):
   df_resultado.columns = [nome]
   return df_resultado
   
-# ------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------ 
 
 def criar_paleta_cores(qtd_cores, esquema_cor):
     cmap = getattr(cm, esquema_cor)
@@ -97,15 +154,18 @@ def criar_paleta_cores(qtd_cores, esquema_cor):
     cores_hex = [cm.colors.rgb2hex(cmap(i)[:3]) for i in np.linspace(0, 1, qtd_cores)]
     return cores_hex
     
-# ------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------ 
 
-def retorna_cores(x):
+def retorna_cores(x, cmap=""):
   # https://colordesigner.io/gradient-generator
   # cores = ['#fafa6e','#d7f171','#b5e877','#95dd7d','#77d183','#5bc489','#3fb78d','#23aa8f','#009c8f','#008d8c','#007f86','#0b717e','#1c6373','#255566','#2a4858']  
-  cores = criar_paleta_cores(x, "viridis")
+  if cmap == '' or cmap == None:
+    cores = criar_paleta_cores(x, "viridis")
+  else:
+    cores = criar_paleta_cores(x, cmap)
   return cores[0:x]
     
-# ------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------ 
 
 def retorna_colunas_data(df):
 
@@ -117,10 +177,10 @@ def retorna_colunas_data(df):
 
   return newlist
 
-# ------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------ 
 
-def gerar_squarify(df, atributo="CD_CONTA", title=None):
-  cores = retorna_cores(len(df))
+def gerar_squarify(df, atributo="CD_CONTA", title=None, cmap=""):
+  cores = retorna_cores(len(df), cmap=cmap)
   for data in retorna_colunas_data(df):
     fig = plt.figure()
     sns.set_style(style="whitegrid") # Set seaborn plot style
@@ -132,14 +192,13 @@ def gerar_squarify(df, atributo="CD_CONTA", title=None):
     label=df2[atributo]
     squarify.plot(sizes=sizes, label=label, alpha=0.6, color=cores).set(title=title + "\n" + f"Data de Referência: {data}")
     plt.axis('off')
-    plt.show()
     st.pyplot(fig)
 
-# ------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------ 
 
 # https://stackoverflow.com/questions/72181211/grouped-bar-charts-in-altair-using-two-different-columns
 
-# ------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------ 
 
 def graficos_analise_inicial(df):
   # Verificar a distribuição das colunas numéricas
@@ -163,9 +222,9 @@ def graficos_analise_inicial(df):
     plt.xticks(rotation=90)
     plt.show()
 
-# ------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------ 
 
-def grafico_1(df_ref, titulo, denom_cia, dt_refer):
+def grafico_1(df_ref, titulo, denom_cia, dt_refer, cmap='viridis'):
 
   df = df_ref
   
@@ -183,7 +242,7 @@ def grafico_1(df_ref, titulo, denom_cia, dt_refer):
       y=alt.Y('ORDEM_EXERC:N', axis=alt.Axis(title='')),
       #color=alt.Color('ORDEM_EXERC:N', legend=alt.Legend(title='Exercício'), scale=alt.Scale(domain=retorna_colunas_data(df), range=retorna_cores(len(retorna_colunas_data(df))))),
       #color=alt.Color('Valor (R$):Q'),
-      color=alt.Color('Valor (R$):Q', legend=alt.Legend(title='Valor (R$)'), scale=alt.Scale(range=retorna_cores(len(retorna_colunas_data(df))))),
+      color=alt.Color('Valor (R$):Q', legend=alt.Legend(title='Valor (R$)'), scale=alt.Scale(range=retorna_cores(len(retorna_colunas_data(df)),cmap))),
       row=alt.Column('CD_CONTA:N', header=alt.Header(labelAngle=0), title="Conta"),
       tooltip=['CD_CONTA','DS_CONTA','ORDEM_EXERC:O','Valor (R$):Q']
   ).transform_fold(
@@ -200,10 +259,9 @@ def grafico_1(df_ref, titulo, denom_cia, dt_refer):
       }
   )#.add_selection(filtro_contas_pai).transform_filter(filtro_contas_pai)
 
-  # Exibir o gráfico interativo
-  st.altair_chart(my_chart.interactive(), use_container_width=True)  
+  return my_chart 
 
-# ------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------ 
 
 def grafico_2(df, titulo, denom_cia, dt_refer):
 
@@ -246,11 +304,10 @@ def grafico_2(df, titulo, denom_cia, dt_refer):
   ).resolve_scale(
       x='independent'
   )#.add_selection(filtro_datas).transform_filter(filtro_datas).add_selection(filtro_conta_fixa).transform_filter(filtro_conta_fixa)
+  
+  return my_chart
 
-  # Exibir o gráfico interativo
-  st.altair_chart(my_chart.interactive(), use_container_width=True)  
-
-# ------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------ 
 
 def grafico_3(df, titulo, denom_cia, dt_refer):
 
@@ -273,8 +330,7 @@ def grafico_3(df, titulo, denom_cia, dt_refer):
       }
   )
 
-  # Exibir o gráfico interativo
-  st.altair_chart(my_chart.interactive(), use_container_width=True)  
+  return my_chart
 
 # ------------------------------------------------------------------------------ 
 
@@ -327,30 +383,7 @@ def grafico_comparativo_duas_contas(df_ref, titulo, denom_cia, dt_refer, cd_cont
       }
   )
 
-  # Exibir o gráfico interativo
-  st.altair_chart(my_chart.interactive(), use_container_width=True)  
-
-# ------------------------------------------------------------------------------
-
-# ------------------------------------------------------------------------------ 
-# ------------------------------------------------------------------------------ 
-# ------------------------------------------------------------------------------ 
-# ------------------------------------------------------------------------------ 
-# ------------------------------------------------------------------------------ 
-# ------------------------------------------------------------------------------ 
-# ------------------------------------------------------------------------------ 
-# ------------------------------------------------------------------------------ 
-# ------------------------------------------------------------------------------ 
-# ------------------------------------------------------------------------------ 
-# ------------------------------------------------------------------------------ 
-
-# Funções Sankey
-
-import plotly.graph_objects as go
-
-# ------------------------------------------------------------------------------ 
-
-# ------------------------------------------------------------------------------ 
+  return my_chart
 
 # ------------------------------------------------------------------------------ 
 
@@ -371,17 +404,6 @@ def create_source_target_value(df, cat_cols, value_cols):
     return sourceTargetDf
 
 # ------------------------------------------------------------------------------ 
-    
-# https://www.tutorialspoint.com/python-plotly-how-to-define-the-structure-of-a-sankey-diagram-using-a-pandas-dataframe
-
-import pandas as pd
-import plotly.graph_objects as go
-
-# ------------------------------------------------------------------------------ 
-# ------------------------------------------------------------------------------ 
-# ------------------------------------------------------------------------------ 
-# ------------------------------------------------------------------------------ 
-# ------------------------------------------------------------------------------ 
 
 def get_ds_conta(df, cd_conta):
     ds_conta = df.loc[df['CD_CONTA'] == cd_conta, 'DS_CONTA']
@@ -390,6 +412,8 @@ def get_ds_conta(df, cd_conta):
     else:
         return ""
 
+# ------------------------------------------------------------------------------ 
+
 def find_index_by_cd_conta(df, cd_conta):
     index = df.index[df['CD_CONTA'] == cd_conta]
     if len(index) > 0:
@@ -397,7 +421,7 @@ def find_index_by_cd_conta(df, cd_conta):
     else:
         return None
 
-# ----------------------------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------ 
 
 # Funções TreeMap
 
@@ -431,10 +455,9 @@ def gerar_treemap(df, path=['GRUPO_DFP','DT_FIM_EXERC','DS_CONTA_PAI','DS_CONTA'
   # Adicionar interatividade para expandir e contrair os nós do Treemap
   fig.update_traces(textinfo="label+value", hovertemplate='<b>%{label}</b><br>Valor: R$ %{value}<br>Proporção: %{percentParent:.2%}<extra></extra>')
 
-  # Exibir o gráfico
-  st.plotly_chart(fig, use_container_width=True)
+  return fig
   
-# ----------------------------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------ 
 
 # Funções Sunburst
 
@@ -465,8 +488,7 @@ def gerar_sunburst(df, path=['GRUPO_DFP','DT_FIM_EXERC','DS_CONTA_PAI','DS_CONTA
       height=600  # Altura em pixels
   )
 
-  # Exibir o gráfico
-  st.plotly_chart(fig, use_container_width=True)
+  return fig
 
 # ------------------------------------------------------------------------------ 
 
@@ -534,8 +556,7 @@ def desenha_grafico_rede(df, node_color='NIVEL_CONTA:N', cmap='viridis', title='
       height=600
   )
 
-  # Exibir o gráfico interativo
-  st.altair_chart(my_chart.interactive(), use_container_width=True) 
+  return my_chart
   
 # ------------------------------------------------------------------------------ 
 
@@ -546,7 +567,7 @@ def desenha_grafico_rede(df, node_color='NIVEL_CONTA:N', cmap='viridis', title='
 import plotly.graph_objects as go
 import networkx as nx
 
-def desenha_grafico_rede_plotly(df, node_label=None, title=''):
+def desenha_grafico_rede_plotly(df, node_label=None, title='', colorscale='YlGnBu'):
 
   G = nx.from_pandas_edgelist(df, source='DS_CONTA_PAI', target='DS_CONTA', edge_attr=True, create_using=None, edge_key=None)
   pos = nx.kamada_kawai_layout(G) # Utilizando o layout kamada-kawai para posicionar os nós
@@ -602,7 +623,7 @@ def desenha_grafico_rede_plotly(df, node_label=None, title=''):
       hoverinfo='text',
       marker=dict(
           showscale=True,
-          colorscale='YlGnBu',
+          colorscale=colorscale,
           reversescale=True,
           color=[],
           size=10,
@@ -657,7 +678,7 @@ def desenha_grafico_rede_plotly(df, node_label=None, title=''):
                   xaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
                   yaxis=dict(showgrid=False, zeroline=False, showticklabels=False))
                   )
-  st.plotly_chart(fig, use_container_width=True)
+  return fig
 
 # ------------------------------------------------------------------------------ 
 
@@ -706,9 +727,9 @@ def gerar_waterfall(df, title='Waterfall'):
 
   fig.update_layout(height=600, margin=dict(t=60, b=60, l=40, r=40))
 
-  st.plotly_chart(fig, use_container_width=True)
+  return fig
 
-# ------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------ 
 
 def bruxaria(df):
 
@@ -752,9 +773,9 @@ def bruxaria(df):
   # Retorna o objeto
   return df
   
-# ------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------ 
 
-def atributos(df):
+def atributos(df, cmap=""):
 
   df = bruxaria(df)
     
@@ -771,7 +792,11 @@ def atributos(df):
       'Desvio Padrão': df.select_dtypes(include=[np.number]).std()
   })
   st.write('**RESUMO**')
-  st.write(df_types)
+  
+  if cmap:
+    st.dataframe(df_types.style.format(precision=2).background_gradient(cmap=cmap, axis=0, subset=['Desvio Padrão', 'Média']))
+  else:
+    st.dataframe(df_types.style.format(precision=2))
 
 # ------------------------------------------------------------------------------
 
@@ -811,5 +836,10 @@ def atributos(df):
 
       st.write(df)
 
+# ------------------------------------------------------------------------------ 
+# ------------------------------------------------------------------------------ 
+# ------------------------------------------------------------------------------ 
+# ------------------------------------------------------------------------------ 
+# ------------------------------------------------------------------------------ 
 # ------------------------------------------------------------------------------ 
 

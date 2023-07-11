@@ -16,6 +16,12 @@ import sys
 import marcelo as mp
 import DFP as dfp
 import funcoes as fun
+import matplotlib.pyplot as plt
+import plotly.express as px
+
+# Obter a lista de todos os cmaps disponíveis
+cmaps = ['']
+cmaps.extend(plt.colormaps())
 
 # ------------------------------------------------------------------------------
 
@@ -66,7 +72,13 @@ df_filtered = df_concatenado[df_concatenado['NIVEL_CONTA'] <= nivel_conta]
 # ------------------------------------------------------------------------------
 
 st.subheader("Demonstrativos da empresa")
+
+# Criar um selectbox com os cmaps
+selected_cmap = st.selectbox('Opções de escala de cores:', cmaps)
+
+# Tabela com as contas da empresa
 df = fun.tabela_contas_empresa(df_filtered, percentual=False)
+fun.tabela_com_estilo(df, cmap=selected_cmap)
 
 # ------------------------------------------------------------------------------
 
@@ -95,15 +107,18 @@ with data_container:
 st.subheader("R: Gráfico de rede - Plotly - Todas as demonstrações")
 
 df = df_filtered.sort_values(by=['CD_CONTA_PAI','CD_CONTA']).reset_index(drop=True)
-fun.desenha_grafico_rede_plotly(df, node_label='CD_CONTA', title=f"Todas as demonstrações financeiras padronizadas - {denom_cia}")
+color_continuous_scale = st.selectbox('Opções de escala de cores:', px.colors.named_colorscales())
+fig = fun.desenha_grafico_rede_plotly(df, node_label='CD_CONTA', title=f"Todas as demonstrações financeiras padronizadas - {denom_cia}", colorscale=color_continuous_scale)
+st.plotly_chart(fig, use_container_width=True)
 
 st.subheader("R: Gráfico de rede - NetworkX Altair - Todas as demonstrações")
 
 # Gráfico
 node_color = st.selectbox('Atributo:', ['NIVEL_CONTA:N','ST_CONTA_FIXA:N','VL_CONTA:Q','degree:Q'])
-cmap = st.selectbox('Mapas de cores:', ['viridis','set1','yellowgreen','blues']) # https://vega.github.io/vega/docs/schemes/
-
-fun.desenha_grafico_rede(df_filtered, node_color=node_color, cmap=cmap, title=f"Todas as demonstrações financeiras padronizadas - {denom_cia}")
+scheme_dict = {'NIVEL_CONTA:N':'categorical','ST_CONTA_FIXA:N':'cyclical','VL_CONTA:Q':'sequential_multi_hue','degree:Q':'sequential_single_hue'}
+cmap = st.selectbox('Opções de escala de cores:', fun.vega_schemes(scheme_dict[node_color])) # https://vega.github.io/vega/docs/schemes/
+my_chart = fun.desenha_grafico_rede(df_filtered, node_color=node_color, cmap=cmap, title=f"Todas as demonstrações financeiras padronizadas - {denom_cia}")
+st.altair_chart(my_chart.interactive(), use_container_width=True) 
 
 # ------------------------------------------------------------------------------
 
@@ -153,11 +168,13 @@ if tipo == 'Todos':
   with tab1:
     dfp1 = st.selectbox('DFP Consolidado:', list(filter(lambda k: 'Consolidado' in k, dfps)))
     df = df_filtered[(df_filtered['GRUPO_DFP'] == dfp1)]
-    fun.desenha_grafico_rede(df, node_color=node_color, cmap=cmap, title=f"{dfp1} - {denom_cia}")
+    my_chart = fun.desenha_grafico_rede(df, node_color=node_color, cmap=cmap, title=f"{dfp1} - {denom_cia}")
+    st.altair_chart(my_chart.interactive(), use_container_width=True) 
 
   with tab2:
     dfp2 = st.selectbox('DFP Individual:', list(filter(lambda k: 'Individual' in k, dfps)))
     df = df_filtered[(df_filtered['GRUPO_DFP'] == dfp2)]
-    fun.desenha_grafico_rede(df, node_color=node_color, cmap=cmap, title=f"{dfp2} - {denom_cia}")
+    my_chart = fun.desenha_grafico_rede(df, node_color=node_color, cmap=cmap, title=f"{dfp2} - {denom_cia}")
+    st.altair_chart(my_chart.interactive(), use_container_width=True) 
 
 # ------------------------------------------------------------------------------

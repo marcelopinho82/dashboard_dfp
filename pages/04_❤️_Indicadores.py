@@ -16,6 +16,12 @@ import sys
 import marcelo as mp
 import DFP as dfp
 import funcoes as fun
+import matplotlib.pyplot as plt
+import plotly.express as px
+
+# Obter a lista de todos os cmaps disponíveis
+cmaps = ['']
+cmaps.extend(plt.colormaps())
 
 # ------------------------------------------------------------------------------
 
@@ -49,7 +55,13 @@ st.subheader("Dados brutos")
 st.write(df_concatenado)
 
 st.subheader("Demonstrativos da empresa")
+
+# Criar um selectbox com os cmaps
+selected_cmap = st.selectbox('Opções de escala de cores:', cmaps)
+
+# Tabela com as contas da empresa
 df = fun.tabela_contas_empresa(df_concatenado, percentual=False)
+fun.tabela_com_estilo(df, cmap=selected_cmap)
 
 # ------------------------------------------------------------------------------
 

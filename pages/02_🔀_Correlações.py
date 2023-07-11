@@ -16,6 +16,12 @@ import sys
 import marcelo as mp
 import DFP as dfp
 import funcoes as fun
+import matplotlib.pyplot as plt
+import plotly.express as px
+
+# Obter a lista de todos os cmaps disponíveis
+cmaps = ['']
+cmaps.extend(plt.colormaps())
 
 # ------------------------------------------------------------------------------
 
@@ -73,9 +79,15 @@ df_DFP1 = dfp.dados_da_empresa(df_csv1, cd_cvm, dt_refer, nivel_conta)
 df_DFP2 = dfp.dados_da_empresa(df_csv2, cd_cvm, dt_refer, nivel_conta)
 
 df_DFP = pd.concat([df_DFP1, df_DFP2])
+
+# ------------------------------------------------------------------------------
+  
+# Criar um selectbox com os cmaps
+selected_cmap = st.selectbox('Opções de escala de cores:', cmaps)
   
 # Tabela com as contas da empresa
 df = fun.tabela_contas_empresa(df_DFP, percentual=False)
+fun.tabela_com_estilo(df, cmap=selected_cmap)
 
 # ------------------------------------------------------------------------------
 
@@ -134,7 +146,10 @@ st.write(filteredDf)
 import matplotlib.pyplot as plt
 import seaborn as sns
 fig = plt.figure(figsize=(8, 12))
-heatmap = sns.heatmap(filteredDf, vmin=-1, vmax=1, annot=True, cmap='coolwarm')
+if selected_cmap == '':
+  heatmap = sns.heatmap(filteredDf, vmin=-1, vmax=1, annot=True, cmap="coolwarm")
+else:
+  heatmap = sns.heatmap(filteredDf, vmin=-1, vmax=1, annot=True, cmap=selected_cmap)
 heatmap.set_title(f'Atributos correlacionados com {target}', fontdict={'fontsize':18}, pad=16);
 st.pyplot(fig)
 
