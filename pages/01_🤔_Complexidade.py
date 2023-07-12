@@ -120,6 +120,22 @@ cmap = st.selectbox('Opções de escala de cores:', fun.vega_schemes(scheme_dict
 my_chart = fun.desenha_grafico_rede(df_filtered, node_color=node_color, cmap=cmap, title=f"Todas as demonstrações financeiras padronizadas - {denom_cia}")
 st.altair_chart(my_chart.interactive(), use_container_width=True) 
 
+
+charts = []
+dfps = df_filtered['GRUPO_DFP'].unique().tolist()
+dfps.sort(key=lambda x: x.split("-")[-1].strip())
+for dfp in dfps:
+  df = df_filtered[(df_filtered['GRUPO_DFP'] == dfp)]
+  charts.append(fun.desenha_grafico_rede(df, node_color='NIVEL_CONTA:N', cmap=cmap, title=f"{dfp} - {denom_cia}"))
+
+concatenated_charts = []
+for i in range(0, len(charts), 2):
+    if i + 1 < len(charts):
+        concatenated_charts.append(alt.hconcat(charts[i], charts[i + 1]))
+    else:
+        concatenated_charts.append(charts[i])
+st.altair_chart(alt.vconcat(*concatenated_charts), use_container_width=True) 
+
 # ------------------------------------------------------------------------------
 
 if tipo == 'Todos':

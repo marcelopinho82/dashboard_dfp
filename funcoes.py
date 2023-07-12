@@ -552,8 +552,8 @@ def desenha_grafico_rede(df, node_color='NIVEL_CONTA:N', cmap='viridis', title='
       linewidths=0
   ).properties(
       title=title,
-      width=800,
-      height=600
+      #width=800,
+      #height=600
   )
 
   return my_chart
