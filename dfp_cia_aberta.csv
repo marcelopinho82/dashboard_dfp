@@ -12,6 +12,19 @@ CNPJ_CIA,DT_REFER,VERSAO,DENOM_CIA,CD_CVM,CATEG_DOC,ID_DOC,DT_RECEB,LINK_DOC
 01.545.826/0001-07,2022-12-31,2,GAFISA S.A.,16101,DFP,124751,2023-03-29,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=124751
 01.896.779/0001-38,2022-12-31,1,CSU DIGITAL S.A.,20044,DFP,124445,2023-03-21,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=124445
 02.149.205/0001-69,2022-12-31,1,PORTO SEGURO S.A.,16659,DFP,123439,2023-02-09,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=123439
+02.258.422/0001-97,2022-12-31,1,INEPAR EQUIPAMENTOS E MONTAGENS S/A - EM RECUPERACAO JUDICIA,17868,DFP,124885,2023-03-31,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=124885
+02.286.479/0001-08,2022-12-31,1,LOCALIZA FLEET S.A.,24813,DFP,124915,2023-03-31,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=124915
+02.351.144/0001-18,2022-12-31,1,TEGMA GESTAO LOGISTICA S.A.,20800,DFP,124019,2023-03-09,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=124019
+02.351.144/0001-18,2022-12-31,2,TEGMA GESTAO LOGISTICA S.A.,20800,DFP,124110,2023-03-13,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=124110
+02.351.144/0001-18,2022-12-31,3,TEGMA GESTAO LOGISTICA S.A.,20800,DFP,124544,2023-03-24,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=124544
+03.847.461/0001-92,2022-12-31,1,BRADESPAR S.A.,18724,DFP,124650,2023-03-27,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=124650
+09.346.601/0001-25,2022-12-31,1,"B3 S.A. - BRASIL, BOLSA, BALCÃO",21610,DFP,123562,2023-02-15,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=123562
+09.346.601/0001-25,2022-12-31,2,"B3 S.A. - BRASIL, BOLSA, BALCÃO",21610,DFP,124513,2023-03-23,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=124513
+17.344.597/0001-94,2022-12-31,1,BB SEGURIDADE PARTICIPAÇÕES S.A.,23159,DFP,123424,2023-02-09,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=123424
+60.746.948/0001-12,2022-12-31,1,BCO BRADESCO S.A.,906,DFP,123448,2023-02-09,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=123448
+60.872.504/0001-23,2022-12-31,1,ITAU UNIBANCO HOLDING S.A.,19348,DFP,123392,2023-02-07,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=123392
+90.400.888/0001-42,2022-12-31,1,BCO SANTANDER (BRASIL) S.A.,20532,DFP,123325,2023-02-02,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=123325
+90.400.888/0001-42,2022-12-31,2,BCO SANTANDER (BRASIL) S.A.,20532,DFP,123805,2023-03-01,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=123805
 00.000.000/0001-91,2020-12-31,1,BCO BRASIL S.A.,1023,DFP,100120,2021-02-11,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=100120
 00.000.000/0001-91,2020-12-31,2,BCO BRASIL S.A.,1023,DFP,102382,2021-03-29,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=102382
 00.001.180/0001-26,2020-12-31,1,CENTRAIS ELET BRAS S.A. - ELETROBRAS,2437,DFP,102103,2021-03-19,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=102103
@@ -28,6 +41,19 @@ CNPJ_CIA,DT_REFER,VERSAO,DENOM_CIA,CD_CVM,CATEG_DOC,ID_DOC,DT_RECEB,LINK_DOC
 02.149.205/0001-69,2020-12-31,1,PORTO SEGURO S.A.,16659,DFP,99981,2021-02-08,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=99981
 02.149.205/0001-69,2020-12-31,2,PORTO SEGURO S.A.,16659,DFP,100101,2021-02-11,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=100101
 02.149.205/0001-69,2020-12-31,3,PORTO SEGURO S.A.,16659,DFP,100458,2021-02-25,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=100458
+02.258.422/0001-97,2020-12-31,1,INEPAR EQUIPAMENTOS E MONTAGENS S/A - EM RECUPERACAO JUDICIA,17868,DFP,107138,2021-08-02,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=107138
+02.286.479/0001-08,2020-12-31,1,LOCALIZA FLEET S.A.,24813,DFP,102166,2021-03-23,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=102166
+02.351.144/0001-18,2020-12-31,1,TEGMA GESTAO LOGISTICA S.A.,20800,DFP,100790,2021-03-09,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=100790
+03.847.461/0001-92,2020-12-31,1,BRADESPAR S.A.,18724,DFP,102213,2021-03-25,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=102213
+09.346.601/0001-25,2020-12-31,1,"B3 S.A. - BRASIL, BOLSA, BALCÃO",21610,DFP,100673,2021-03-04,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=100673
+17.344.597/0001-94,2020-12-31,1,BB SEGURIDADE PARTICIPAÇÕES S.A.,23159,DFP,99979,2021-02-08,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=99979
+60.746.948/0001-12,2020-12-31,1,BCO BRADESCO S.A.,906,DFP,99899,2021-02-03,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=99899
+60.746.948/0001-12,2020-12-31,2,BCO BRADESCO S.A.,906,DFP,100788,2021-03-09,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=100788
+60.872.504/0001-23,2020-12-31,1,ITAU UNIBANCO HOLDING S.A.,19348,DFP,99841,2021-02-01,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=99841
+60.872.504/0001-23,2020-12-31,2,ITAU UNIBANCO HOLDING S.A.,19348,DFP,99859,2021-02-02,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=99859
+60.872.504/0001-23,2020-12-31,3,ITAU UNIBANCO HOLDING S.A.,19348,DFP,100459,2021-02-25,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=100459
+90.400.888/0001-42,2020-12-31,1,BCO SANTANDER (BRASIL) S.A.,20532,DFP,99881,2021-02-03,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=99881
+90.400.888/0001-42,2020-12-31,2,BCO SANTANDER (BRASIL) S.A.,20532,DFP,100531,2021-02-26,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=100531
 00.000.000/0001-91,2015-12-31,1,BCO BRASIL S.A.,1023,DFP,53614,2016-02-25,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=53614
 00.000.000/0001-91,2015-12-31,2,BCO BRASIL S.A.,1023,DFP,54536,2016-03-28,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=54536
 00.000.000/0001-91,2015-12-31,3,BCO BRASIL S.A.,1023,DFP,57534,2016-06-02,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=57534
@@ -44,6 +70,18 @@ CNPJ_CIA,DT_REFER,VERSAO,DENOM_CIA,CD_CVM,CATEG_DOC,ID_DOC,DT_RECEB,LINK_DOC
 01.545.826/0001-07,2015-12-31,1,GAFISA S.A.,16101,DFP,53837,2016-03-03,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=53837
 01.896.779/0001-38,2015-12-31,1,CSU CARDSYSTEM S.A.,20044,DFP,53989,2016-03-10,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=53989
 02.149.205/0001-69,2015-12-31,1,PORTO SEGURO S.A.,16659,DFP,53196,2016-02-04,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=53196
+02.258.422/0001-97,2015-12-31,1,INEPAR EQUIPAMENTOS E MONTAGENS S/A,17868,DFP,55388,2016-04-29,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=55388
+02.351.144/0001-18,2015-12-31,1,TEGMA GESTAO LOGISTICA S.A.,20800,DFP,54245,2016-03-21,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=54245
+03.847.461/0001-92,2015-12-31,1,BRADESPAR S.A.,18724,DFP,54217,2016-03-21,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=54217
+09.346.601/0001-25,2015-12-31,1,"B3 S.A. - BRASIL, BOLSA, BALCÃO",21610,DFP,53462,2016-02-18,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=53462
+17.344.597/0001-94,2015-12-31,1,BB SEGURIDADE PARTICIPAÇÕES S.A.,23159,DFP,53513,2016-02-22,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=53513
+17.344.597/0001-94,2015-12-31,2,BB SEGURIDADE PARTICIPAÇÕES S.A.,23159,DFP,53628,2016-02-25,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=53628
+17.344.597/0001-94,2015-12-31,3,BB SEGURIDADE PARTICIPAÇÕES S.A.,23159,DFP,53676,2016-02-26,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=53676
+60.746.948/0001-12,2015-12-31,1,BCO BRADESCO S.A.,906,DFP,53086,2016-01-28,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=53086
+60.746.948/0001-12,2015-12-31,2,BCO BRADESCO S.A.,906,DFP,53890,2016-03-07,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=53890
+60.872.504/0001-23,2015-12-31,1,ITAU UNIBANCO HOLDING S.A.,19348,DFP,53154,2016-02-02,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=53154
+90.400.888/0001-42,2015-12-31,1,BCO SANTANDER (BRASIL) S.A.,20532,DFP,53070,2016-01-27,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=53070
+90.400.888/0001-42,2015-12-31,2,BCO SANTANDER (BRASIL) S.A.,20532,DFP,53729,2016-02-29,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=53729
 00.000.000/0001-91,2021-12-31,1,BCO BRASIL S.A.,1023,DFP,111750,2022-02-14,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=111750
 00.000.000/0001-91,2021-12-31,2,BCO BRASIL S.A.,1023,DFP,112943,2022-03-24,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=112943
 00.001.180/0001-26,2021-12-31,1,CENTRAIS ELET BRAS S.A. - ELETROBRAS,2437,DFP,112739,2022-03-18,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=112739
@@ -60,6 +98,17 @@ CNPJ_CIA,DT_REFER,VERSAO,DENOM_CIA,CD_CVM,CATEG_DOC,ID_DOC,DT_RECEB,LINK_DOC
 01.896.779/0001-38,2021-12-31,1,CSU DIGITAL S.A.,20044,DFP,112393,2022-03-09,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=112393
 01.896.779/0001-38,2021-12-31,2,CSU DIGITAL S.A.,20044,DFP,112414,2022-03-10,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=112414
 02.149.205/0001-69,2021-12-31,1,PORTO SEGURO S.A.,16659,DFP,111606,2022-02-07,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=111606
+02.258.422/0001-97,2021-12-31,1,INEPAR EQUIPAMENTOS E MONTAGENS S/A - EM RECUPERACAO JUDICIA,17868,DFP,113269,2022-03-30,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=113269
+02.286.479/0001-08,2021-12-31,1,LOCALIZA FLEET S.A.,24813,DFP,112074,2022-02-24,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=112074
+02.351.144/0001-18,2021-12-31,1,TEGMA GESTAO LOGISTICA S.A.,20800,DFP,112359,2022-03-09,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=112359
+03.847.461/0001-92,2021-12-31,1,BRADESPAR S.A.,18724,DFP,113117,2022-03-29,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=113117
+09.346.601/0001-25,2021-12-31,1,"B3 S.A. - BRASIL, BOLSA, BALCÃO",21610,DFP,112648,2022-03-17,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=112648
+17.344.597/0001-94,2021-12-31,1,BB SEGURIDADE PARTICIPAÇÕES S.A.,23159,DFP,111570,2022-02-07,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=111570
+60.746.948/0001-12,2021-12-31,1,BCO BRADESCO S.A.,906,DFP,111629,2022-02-08,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=111629
+60.746.948/0001-12,2021-12-31,2,BCO BRADESCO S.A.,906,DFP,112640,2022-03-17,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=112640
+60.872.504/0001-23,2021-12-31,1,ITAU UNIBANCO HOLDING S.A.,19348,DFP,111702,2022-02-10,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=111702
+90.400.888/0001-42,2021-12-31,1,BCO SANTANDER (BRASIL) S.A.,20532,DFP,111515,2022-02-03,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=111515
+90.400.888/0001-42,2021-12-31,2,BCO SANTANDER (BRASIL) S.A.,20532,DFP,112144,2022-02-28,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=112144
 00.000.000/0001-91,2014-12-31,1,BCO BRASIL S.A.,1023,DFP,43994,2015-02-11,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=43994
 00.000.000/0001-91,2014-12-31,2,BCO BRASIL S.A.,1023,DFP,45354,2015-03-27,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=45354
 00.001.180/0001-26,2014-12-31,1,CENTRAIS ELET BRAS S.A. - ELETROBRAS,2437,DFP,45472,2015-03-27,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=45472
@@ -75,6 +124,17 @@ CNPJ_CIA,DT_REFER,VERSAO,DENOM_CIA,CD_CVM,CATEG_DOC,ID_DOC,DT_RECEB,LINK_DOC
 01.896.779/0001-38,2014-12-31,1,CSU CARDSYSTEM S.A.,20044,DFP,44944,2015-03-12,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=44944
 02.149.205/0001-69,2014-12-31,1,PORTO SEGURO S.A.,16659,DFP,44087,2015-02-13,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=44087
 02.149.205/0001-69,2014-12-31,2,PORTO SEGURO S.A.,16659,DFP,44245,2015-02-25,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=44245
+02.258.422/0001-97,2014-12-31,1,INEPAR EQUIPAMENTOS E MONTAGENS S/A,17868,DFP,46927,2015-05-12,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=46927
+02.351.144/0001-18,2014-12-31,1,TEGMA GESTAO LOGISTICA S.A.,20800,DFP,45323,2015-03-26,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=45323
+03.847.461/0001-92,2014-12-31,1,BRADESPAR S.A.,18724,DFP,45077,2015-03-19,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=45077
+03.847.461/0001-92,2014-12-31,2,BRADESPAR S.A.,18724,DFP,45084,2015-03-19,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=45084
+09.346.601/0001-25,2014-12-31,1,"B3 S.A. - BRASIL, BOLSA, BALCÃO",21610,DFP,43992,2015-02-10,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=43992
+17.344.597/0001-94,2014-12-31,1,BB SEGURIDADE PARTICIPAÇÕES S.A.,23159,DFP,43964,2015-02-10,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=43964
+60.746.948/0001-12,2014-12-31,1,BCO BRADESCO S.A.,906,DFP,43684,2015-01-29,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=43684
+60.746.948/0001-12,2014-12-31,2,BCO BRADESCO S.A.,906,DFP,45717,2015-03-31,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=45717
+60.872.504/0001-23,2014-12-31,1,ITAU UNIBANCO HOLDING S.A.,19348,DFP,43750,2015-02-03,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=43750
+90.400.888/0001-42,2014-12-31,1,BCO SANTANDER (BRASIL) S.A.,20532,DFP,43749,2015-02-03,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=43749
+90.400.888/0001-42,2014-12-31,2,BCO SANTANDER (BRASIL) S.A.,20532,DFP,45724,2015-03-31,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=45724
 00.000.000/0001-91,2019-12-31,1,BCO BRASIL S.A.,1023,DFP,90922,2020-02-13,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=90922
 00.000.000/0001-91,2019-12-31,2,BCO BRASIL S.A.,1023,DFP,92773,2020-05-06,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=92773
 00.001.180/0001-26,2019-12-31,1,CENTRAIS ELET BRAS S.A. - ELETROBRAS,2437,DFP,91942,2020-03-27,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=91942
@@ -89,6 +149,19 @@ CNPJ_CIA,DT_REFER,VERSAO,DENOM_CIA,CD_CVM,CATEG_DOC,ID_DOC,DT_RECEB,LINK_DOC
 01.545.826/0001-07,2019-12-31,1,GAFISA S.A.,16101,DFP,91877,2020-03-26,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=91877
 01.896.779/0001-38,2019-12-31,1,CSU DIGITAL S.A.,20044,DFP,91497,2020-03-11,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=91497
 02.149.205/0001-69,2019-12-31,1,PORTO SEGURO S.A.,16659,DFP,90699,2020-02-03,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=90699
+02.258.422/0001-97,2019-12-31,1,INEPAR EQUIPAMENTOS E MONTAGENS S/A - EM RECUPERACAO JUDICIA,17868,DFP,94583,2020-07-03,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=94583
+02.286.479/0001-08,2019-12-31,1,LOCALIZA FLEET S.A.,24813,DFP,91475,2020-03-10,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=91475
+02.351.144/0001-18,2019-12-31,1,TEGMA GESTAO LOGISTICA S.A.,20800,DFP,92124,2020-03-31,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=92124
+03.847.461/0001-92,2019-12-31,1,BRADESPAR S.A.,18724,DFP,91842,2020-03-26,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=91842
+09.346.601/0001-25,2019-12-31,1,"B3 S.A. - BRASIL, BOLSA, BALCÃO",21610,DFP,91388,2020-03-05,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=91388
+17.344.597/0001-94,2019-12-31,1,BB SEGURIDADE PARTICIPAÇÕES S.A.,23159,DFP,90838,2020-02-10,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=90838
+60.746.948/0001-12,2019-12-31,1,BCO BRADESCO S.A.,906,DFP,90741,2020-02-05,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=90741
+60.746.948/0001-12,2019-12-31,2,BCO BRADESCO S.A.,906,DFP,91429,2020-03-06,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=91429
+60.872.504/0001-23,2019-12-31,1,ITAU UNIBANCO HOLDING S.A.,19348,DFP,90858,2020-02-10,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=90858
+90.400.888/0001-42,2019-12-31,1,BCO SANTANDER (BRASIL) S.A.,20532,DFP,90638,2020-01-29,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=90638
+90.400.888/0001-42,2019-12-31,2,BCO SANTANDER (BRASIL) S.A.,20532,DFP,90694,2020-01-31,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=90694
+90.400.888/0001-42,2019-12-31,3,BCO SANTANDER (BRASIL) S.A.,20532,DFP,91236,2020-02-27,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=91236
+90.400.888/0001-42,2019-12-31,4,BCO SANTANDER (BRASIL) S.A.,20532,DFP,91518,2020-03-12,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=91518
 00.000.000/0001-91,2017-12-31,1,BCO BRASIL S.A.,1023,DFP,71664,2018-02-22,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=71664
 00.000.000/0001-91,2017-12-31,2,BCO BRASIL S.A.,1023,DFP,72574,2018-03-23,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=72574
 00.001.180/0001-26,2017-12-31,1,CENTRAIS ELET BRAS S.A. - ELETROBRAS,2437,DFP,72695,2018-03-27,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=72695
@@ -107,6 +180,17 @@ CNPJ_CIA,DT_REFER,VERSAO,DENOM_CIA,CD_CVM,CATEG_DOC,ID_DOC,DT_RECEB,LINK_DOC
 01.896.779/0001-38,2017-12-31,1,CSU CARDSYSTEM S.A.,20044,DFP,72070,2018-03-07,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=72070
 02.149.205/0001-69,2017-12-31,1,PORTO SEGURO S.A.,16659,DFP,71331,2018-02-05,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=71331
 02.149.205/0001-69,2017-12-31,2,PORTO SEGURO S.A.,16659,DFP,71335,2018-02-05,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=71335
+02.258.422/0001-97,2017-12-31,1,INEPAR EQUIPAMENTOS E MONTAGENS S/A - EM RECUPERACAO JUDICIA,17868,DFP,76315,2018-07-11,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=76315
+02.351.144/0001-18,2017-12-31,1,TEGMA GESTAO LOGISTICA S.A.,20800,DFP,72444,2018-03-20,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=72444
+03.847.461/0001-92,2017-12-31,1,BRADESPAR S.A.,18724,DFP,72464,2018-03-21,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=72464
+09.346.601/0001-25,2017-12-31,1,"B3 S.A. - BRASIL, BOLSA, BALCÃO",21610,DFP,71915,2018-03-01,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=71915
+17.344.597/0001-94,2017-12-31,1,BB SEGURIDADE PARTICIPAÇÕES S.A.,23159,DFP,71564,2018-02-19,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=71564
+60.746.948/0001-12,2017-12-31,1,BCO BRADESCO S.A.,906,DFP,71281,2018-02-01,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=71281
+60.746.948/0001-12,2017-12-31,2,BCO BRADESCO S.A.,906,DFP,72114,2018-03-08,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=72114
+60.872.504/0001-23,2017-12-31,1,ITAU UNIBANCO HOLDING S.A.,19348,DFP,71343,2018-02-05,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=71343
+90.400.888/0001-42,2017-12-31,1,BCO SANTANDER (BRASIL) S.A.,20532,DFP,71260,2018-01-30,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=71260
+90.400.888/0001-42,2017-12-31,2,BCO SANTANDER (BRASIL) S.A.,20532,DFP,71561,2018-02-16,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=71561
+90.400.888/0001-42,2017-12-31,3,BCO SANTANDER (BRASIL) S.A.,20532,DFP,76554,2018-07-30,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=76554
 00.000.000/0001-91,2018-12-31,1,BCO BRASIL S.A.,1023,DFP,80655,2019-02-14,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=80655
 00.000.000/0001-91,2018-12-31,2,BCO BRASIL S.A.,1023,DFP,81425,2019-03-22,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=81425
 00.001.180/0001-26,2018-12-31,1,CENTRAIS ELET BRAS S.A. - ELETROBRAS,2437,DFP,81620,2019-03-27,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=81620
@@ -121,6 +205,21 @@ CNPJ_CIA,DT_REFER,VERSAO,DENOM_CIA,CD_CVM,CATEG_DOC,ID_DOC,DT_RECEB,LINK_DOC
 01.545.826/0001-07,2018-12-31,2,GAFISA S.A.,16101,DFP,82002,2019-04-03,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=82002
 01.896.779/0001-38,2018-12-31,1,CSU DIGITAL S.A.,20044,DFP,80927,2019-02-27,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=80927
 02.149.205/0001-69,2018-12-31,1,PORTO SEGURO S.A.,16659,DFP,80428,2019-02-04,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=80428
+02.258.422/0001-97,2018-12-31,1,INEPAR EQUIPAMENTOS E MONTAGENS S/A - EM RECUPERACAO JUDICIA,17868,DFP,85169,2019-06-27,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=85169
+02.286.479/0001-08,2018-12-31,1,LOCALIZA FLEET S.A.,24813,DFP,86948,2019-09-19,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=86948
+02.351.144/0001-18,2018-12-31,1,TEGMA GESTAO LOGISTICA S.A.,20800,DFP,81305,2019-03-19,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=81305
+03.847.461/0001-92,2018-12-31,1,BRADESPAR S.A.,18724,DFP,81696,2019-03-28,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=81696
+09.346.601/0001-25,2018-12-31,1,"B3 S.A. - BRASIL, BOLSA, BALCÃO",21610,DFP,80815,2019-02-21,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=80815
+17.344.597/0001-94,2018-12-31,1,BB SEGURIDADE PARTICIPAÇÕES S.A.,23159,DFP,80587,2019-02-11,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=80587
+17.344.597/0001-94,2018-12-31,2,BB SEGURIDADE PARTICIPAÇÕES S.A.,23159,DFP,80591,2019-02-11,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=80591
+60.746.948/0001-12,2018-12-31,1,BCO BRADESCO S.A.,906,DFP,80384,2019-01-31,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=80384
+60.746.948/0001-12,2018-12-31,2,BCO BRADESCO S.A.,906,DFP,81071,2019-03-07,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=81071
+60.746.948/0001-12,2018-12-31,3,BCO BRADESCO S.A.,906,DFP,81094,2019-03-08,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=81094
+60.872.504/0001-23,2018-12-31,1,ITAU UNIBANCO HOLDING S.A.,19348,DFP,80441,2019-02-04,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=80441
+60.872.504/0001-23,2018-12-31,2,ITAU UNIBANCO HOLDING S.A.,19348,DFP,80757,2019-02-19,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=80757
+90.400.888/0001-42,2018-12-31,1,BCO SANTANDER (BRASIL) S.A.,20532,DFP,80359,2019-01-30,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=80359
+90.400.888/0001-42,2018-12-31,2,BCO SANTANDER (BRASIL) S.A.,20532,DFP,80670,2019-02-14,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=80670
+90.400.888/0001-42,2018-12-31,3,BCO SANTANDER (BRASIL) S.A.,20532,DFP,80957,2019-02-28,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=80957
 00.000.000/0001-91,2016-12-31,1,BCO BRASIL S.A.,1023,DFP,62557,2017-02-16,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=62557
 00.000.000/0001-91,2016-12-31,2,BCO BRASIL S.A.,1023,DFP,62564,2017-02-16,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=62564
 00.000.000/0001-91,2016-12-31,3,BCO BRASIL S.A.,1023,DFP,63563,2017-03-24,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=63563
@@ -140,3 +239,13 @@ CNPJ_CIA,DT_REFER,VERSAO,DENOM_CIA,CD_CVM,CATEG_DOC,ID_DOC,DT_RECEB,LINK_DOC
 01.545.826/0001-07,2016-12-31,2,GAFISA S.A.,16101,DFP,64995,2017-05-09,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=64995
 01.896.779/0001-38,2016-12-31,1,CSU CARDSYSTEM S.A.,20044,DFP,63021,2017-03-09,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=63021
 02.149.205/0001-69,2016-12-31,1,PORTO SEGURO S.A.,16659,DFP,62320,2017-02-06,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=62320
+02.258.422/0001-97,2016-12-31,1,INEPAR EQUIPAMENTOS E MONTAGENS S/A,17868,DFP,66798,2017-06-13,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=66798
+02.351.144/0001-18,2016-12-31,1,TEGMA GESTAO LOGISTICA S.A.,20800,DFP,63402,2017-03-21,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=63402
+03.847.461/0001-92,2016-12-31,1,BRADESPAR S.A.,18724,DFP,63373,2017-03-21,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=63373
+09.346.601/0001-25,2016-12-31,1,"B3 S.A. - BRASIL, BOLSA, BALCÃO",21610,DFP,62604,2017-02-17,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=62604
+17.344.597/0001-94,2016-12-31,1,BB SEGURIDADE PARTICIPAÇÕES S.A.,23159,DFP,62449,2017-02-13,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=62449
+60.746.948/0001-12,2016-12-31,1,BCO BRADESCO S.A.,906,DFP,62250,2017-02-02,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=62250
+60.746.948/0001-12,2016-12-31,2,BCO BRADESCO S.A.,906,DFP,62810,2017-02-24,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=62810
+60.872.504/0001-23,2016-12-31,1,ITAU UNIBANCO HOLDING S.A.,19348,DFP,62348,2017-02-07,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=62348
+90.400.888/0001-42,2016-12-31,1,BCO SANTANDER (BRASIL) S.A.,20532,DFP,62148,2017-01-26,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=62148
+90.400.888/0001-42,2016-12-31,2,BCO SANTANDER (BRASIL) S.A.,20532,DFP,62811,2017-02-24,http://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=62811

@@ -265,6 +265,11 @@ def grafico_1(df_ref, titulo, denom_cia, dt_refer, cmap='viridis'):
 
 def grafico_2(df, titulo, denom_cia, dt_refer):
 
+  df = df.copy()
+  df['DT_FIM_EXERC'] = df['DT_FIM_EXERC'].astype(str)
+  fig = px.bar(df, x="DT_FIM_EXERC", y="VL_CONTA", color="DS_CONTA", title=f"{titulo} - {denom_cia}", text_auto = True)
+  st.plotly_chart(fig, use_container_width=True)
+
   #datas = list(df['DT_REFER'].unique())
   #datas.sort(reverse=True)
 
@@ -282,7 +287,7 @@ def grafico_2(df, titulo, denom_cia, dt_refer):
   #    init={'ST_CONTA_FIXA': "S"}
   #)
 
-  my_chart = alt.Chart(df).mark_bar().encode(
+  grafico_barras = alt.Chart(df).mark_bar().encode(
       y=alt.Y('DS_CONTA:N', axis=alt.Axis(title='Conta', labelAngle=-45), sort=alt.EncodingSortField("CD_CONTA", order="ascending")),
       x=alt.X('VL_CONTA:Q', axis=alt.Axis(title='Valor (R$)', format='$.2f')),
       color=alt.condition(
@@ -291,9 +296,13 @@ def grafico_2(df, titulo, denom_cia, dt_refer):
           alt.value('#FF4136')  # Cor das barras quando o valor é negativo
       ),
       tooltip=df.columns.tolist()
+  )
+
+  my_chart = alt.layer(
+    grafico_barras
   ).properties(
-      width=800,
-      height=200,
+      width=600,
+      height=100,
       title={
           "text": f"{titulo} - {denom_cia}",
           "fontSize": 16,

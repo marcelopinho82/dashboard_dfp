@@ -384,6 +384,7 @@ elif analise == "Dados na data de referência - Conta X subcontas - Gráfico de 
   df_filho = fun.incluir_percentual(df_filho)
   st.write("Subcontas")
   fun.tabela_com_estilo(df_filho.drop(["CD_CONTA_PAI"], axis=1), cmap=selected_cmap, axis=0) # Exibir o dataframe filtrado
+  
   # Gráfico
   my_chart = fun.grafico_2(df_DFP[(df_DFP['CD_CONTA_PAI'] == cd_conta)], titulo, denom_cia, dt_refer)
   st.altair_chart(my_chart.interactive(), use_container_width=True) 

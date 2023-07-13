@@ -20,7 +20,7 @@ def reduzir_dados(diretorio, lista_cd_cvm):
 
 
 diretorio = './'
-lista_cd_cvm = [1023,2437,14966,15253,21733,15539,15709,16101,20044,16659] # CD_CVM
+lista_cd_cvm = [1023,2437,14966,15253,21733,15539,15709,16101,20044,16659,23159,19348,20532,18724,906,21610,17868,24813,20800] # CD_CVM
+
 
 reduzir_dados(diretorio, lista_cd_cvm)
- 

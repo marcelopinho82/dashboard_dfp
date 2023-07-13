@@ -10,7 +10,8 @@ train_end_date="2017-01-15"
 
 # https://blog.toroinvestimentos.com.br/bolsa/acoes-de-seguradoras
 # https://investidor10.com.br/setores/financeiro/
-tickers=['BBSE3.SA', 'PSSA3.SA', 'BBAS3.SA', 'ITSA4.SA']
+# https://euqueroinvestir.com/educacao-financeira/vale-a-pena-investir-em-empresas-do-setor-financeiro
+tickers=['BBSE3.SA', 'PSSA3.SA', 'ITUB4.SA', 'SANB11.SA', 'ITSA4.SA', 'CIEL3.SA', 'BRAP4.SA', 'BBDC4.SA', 'BBDC3.SA', 'B3SA3.SA']
 
 import pandas as pd
 import numpy as np
