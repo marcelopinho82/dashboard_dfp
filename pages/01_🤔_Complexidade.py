@@ -53,7 +53,7 @@ tipo = st.selectbox('Demonstrativo:', ['Consolidado','Individual', 'Todos'])
 
 # ------------------------------------------------------------------------------
 
-df_concatenado = dfp.demonstrativos_empresa(cd_cvm)
+#df_concatenado = dfp.demonstrativos_empresa(cd_cvm)
 
 if tipo != 'Todos':
   df_concatenado = df_concatenado[(df_concatenado['GRUPO_DFP'].str.contains(tipo))]
