@@ -41,7 +41,7 @@ entries = [entry for entry in os.listdir(DIR) if os.path.isfile(os.path.join(DIR
 
 
 options = mp.Filter(entries, ['dfp_cia_aberta_BP_con', 'dfp_cia_aberta_BP_ind','dfp_cia_aberta_BPA_con', 'dfp_cia_aberta_BPA_ind','dfp_cia_aberta_BPP_con', 'dfp_cia_aberta_BPP_ind'])
-option_arquivo1 = st.selectbox('Selecione o primeiro conjunto de dados', np.sort(options))
+option_arquivo1 = st.selectbox('Selecione o primeiro conjunto de dados:', np.sort(options))
 df_csv1 = pd.read_csv(option_arquivo1)
 df_csv1.drop_duplicates(inplace=True)
 titulo1 = dfp.retorna_titulo(option_arquivo1)
@@ -50,7 +50,7 @@ st.write(f'Você escolheu: {option_arquivo1} ({titulo1})')
 options.remove(option_arquivo1)
 
 options = mp.Filter(entries, ['dfp_cia_aberta_DRE_con', 'dfp_cia_aberta_DRE_ind'])
-option_arquivo2 = st.selectbox('Selecione o segundo conjunto de dados', np.sort(options))
+option_arquivo2 = st.selectbox('Selecione o segundo conjunto de dados:', np.sort(options))
 df_csv2 = pd.read_csv(option_arquivo2)
 df_csv2.drop_duplicates(inplace=True)
 titulo2 = dfp.retorna_titulo(option_arquivo2)
@@ -70,7 +70,7 @@ datas_referencia = dfp.busca_datas_referencia(df_csv1, cd_cvm)
 dt_refer = st.selectbox('Selecione a data de referência:', datas_referencia)
 
 # Definir o nível de detalhamento
-nivel_conta = st.selectbox('Selecione o nivel de detalhamento:', np.sort(df_csv1['NIVEL_CONTA'].unique())[::-1])
+nivel_conta = st.selectbox('Selecione o nível de detalhamento:', np.sort(df_csv1['NIVEL_CONTA'].unique())[::-1])
 
 # ------------------------------------------------------------------------------
 
