@@ -733,6 +733,9 @@ def gerar_waterfall(df, title='Waterfall'):
 
   fig.update_xaxes(showgrid=False)
   fig.update_yaxes(showgrid=True, gridcolor='lightgray')
+  
+  #fig.update_yaxes(range=[0, 250000000]) # DRE - Geração Imagem Mesma Escala na Monografia
+  #fig.update_yaxes(range=[0, 270000000]) # DVA - Geração Imagem Mesma Escala na Monografia
 
   fig.update_layout(height=600, margin=dict(t=60, b=60, l=40, r=40))
 
